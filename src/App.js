@@ -38,6 +38,7 @@ function App() {
           exact
           path="/foods"
           component={ Foods }
+
         />
         <Route
           exact
