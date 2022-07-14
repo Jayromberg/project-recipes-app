@@ -4,7 +4,7 @@ import recipesContext from './RecipesContext';
 
 const INICIAL_STATE = {};
 
-function RecipesProvider({ Children }) {
+function RecipesProvider({ children }) {
   const [state, setState] = useState(INICIAL_STATE);
   const context = {
     state,
@@ -12,13 +12,13 @@ function RecipesProvider({ Children }) {
 
   return (
     <recipesContext.Provider value={ context }>
-      {Children}
+      {children}
     </recipesContext.Provider>
   );
 }
 
 RecipesProvider.propTypes = {
-  Children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default RecipesProvider;
