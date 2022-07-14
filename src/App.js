@@ -28,47 +28,47 @@ function App() {
         <Route
           exact
           path="/foods"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/drinks"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/foods/:id"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/drinks/:id"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/foods/:id/in-progress"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/drinks/:id/in-progress"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/profile"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/done-recipes"
-          component={}
+          // component={}
         />
         <Route
           exact
           path="/favorite-recipes"
-          component={}
+          // component={}
         />
       </Switch>
     </RecipesProvider>
