@@ -5,7 +5,7 @@ import recipesContext from './RecipesContext';
 const INICIAL_STATE = {};
 
 function RecipesProvider({ children }) {
-  const [state] = useState(INICIAL_STATE);
+  const [state, setState] = useState(INICIAL_STATE);
   const context = {
     state,
   };
