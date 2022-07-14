@@ -1,14 +1,17 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route, Switch } from 'react-router-dom';
 import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
+import Recipes from './pages/Recipes';
+import Header from './components/Header';
 
 function App() {
   return (
     <RecipesProvider>
+      <Header />
       <div className="meals">
         <span className="logo">TRYBE</span>
         <object
@@ -28,9 +31,9 @@ function App() {
         <Route
           exact
           path="/foods"
-          component={}
+          component={ Recipes }
         />
-        <Route
+        {/* <Route
           exact
           path="/drinks"
           component={}
@@ -69,7 +72,7 @@ function App() {
           exact
           path="/favorite-recipes"
           component={}
-        />
+        /> */}
       </Switch>
     </RecipesProvider>
   );
