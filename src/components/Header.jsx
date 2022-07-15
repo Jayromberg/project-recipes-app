@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 const INICIAL_STATE_HEADER = {
-  title: null,
+  title: '',
   hasProfile: true,
   hasSearch: true,
   isVisible: false,
   searchText: '',
+  searchRadio: '',
 };
 
 function Header() {
@@ -61,7 +63,7 @@ function Header() {
 
   return (
     <section>
-      {headerState.title && <h1 data-testid="page-title">{headerState.title}</h1>}
+      <h1 data-testid="page-title">{headerState.title}</h1>
       <div>
         {headerState.hasProfile
         && (
@@ -98,6 +100,10 @@ function Header() {
             value={ headerState.searchText }
             onChange={ (e) => setHeaderState({
               ...headerState, searchText: e.target.value }) }
+          />
+          <SearchBar
+            setHeaderState={ setHeaderState }
+            headerState={ headerState }
           />
         </div>)}
     </section>
