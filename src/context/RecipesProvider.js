@@ -10,6 +10,7 @@ function RecipesProvider({ children }) {
   const [isDrink, setIsDrink] = useState(false);
   const [foodsRecipes, setFoodRecipes] = useState([]);
   const [drinkRecipes, setDrinkRecipes] = useState([]);
+  const [email, setEmail] = useState('');
   const TWELVE = 12;
 
   useEffect(() => {
@@ -40,6 +41,8 @@ function RecipesProvider({ children }) {
     setIsDrink,
     foodsRecipes,
     drinkRecipes,
+    email,
+    setEmail,
   };
 
   return (
