@@ -24,7 +24,7 @@ function RecipesProvider({ children }) {
       const firstsResults = result.meals.filter((_item, idx) => idx < TWELVE);
       setFoodRecipes(firstsResults);
     };
-    
+
     const FetchFoodsCategory = async () => {
       const fetchApi = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const result = await fetchApi.json();
@@ -48,7 +48,7 @@ function RecipesProvider({ children }) {
 
     FetchFoodsRecipes();
     FetchFoodsCategory();
-    FetchDriksRecipes();
+    FetchDrinksRecipes();
     FetchDriksCategories();
   }, []);
 
@@ -63,7 +63,7 @@ function RecipesProvider({ children }) {
     const fetchApi = await fetch(URL);
     const result = await fetchApi.json();
     setRecipeCategory(result);
-  }, []);
+  };
 
   const results = async (url, page) => {
     if (page === '/foods') {
@@ -111,7 +111,6 @@ function RecipesProvider({ children }) {
     } else {
       results(urlFirstLetter, page);
     }
-
   };
 
   const context = {

@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -6,14 +5,19 @@ import RecipesContext from '../context/RecipesContext';
 
 function Recipes({ withCategory, setWithCategory }) {
   const TWELVE = 12;
-  const { isFood, isDrink, foodsRecipes, drinkRecipes, foodCategories,
-    drinkCategories, fetchFoodsFromCategory,
+  const { isFood,
+    isDrink,
+    foodsRecipes,
+    drinkRecipes,
+    foodCategories,
+    drinkCategories,
+    fetchFoodsFromCategory,
     recipefromCategory } = useContext(RecipesContext);
   const categories = isFood ? foodCategories : drinkCategories;
 
   const [All, setAll] = useState(true);
   const [categoryRecipe, setCategoryRecipe] = useState([]);
-  
+
   const history = useHistory();
   useEffect(() => {
     if (foodsRecipes.length === 1) {
