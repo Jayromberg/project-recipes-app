@@ -1,8 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 function Recipes() {
   const { isFood, isDrink, foodsRecipes, drinkRecipes } = useContext(RecipesContext);
+  const history = useHistory();
+  useEffect(() => {
+    if (foodsRecipes.length === 1) {
+      history.push(`/foods/${foodsRecipes[0].idMeal}`);
+    }
+    if (drinkRecipes.length === 1) {
+      history.push(`/drinks/${drinkRecipes[0].idDrink}`);
+    }
+  }, [drinkRecipes,
+    drinkRecipes.idDrink,
+    drinkRecipes.length,
+    foodsRecipes,
+    foodsRecipes.idMeal,
+    foodsRecipes.length,
+    history]);
+
   return (
     <div>
       { isFood && foodsRecipes.map((item, index) => (

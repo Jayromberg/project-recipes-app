@@ -23,14 +23,62 @@ function RecipesProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const FetchDriksRecipes = async () => {
+    const FetchDrinksRecipes = async () => {
       const fetchApi = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const results = await fetchApi.json();
       const firstsResults = results.drinks.filter((_item, idx) => idx < TWELVE);
       setDrinkRecipes(firstsResults);
     };
-    FetchDriksRecipes();
+    FetchDrinksRecipes();
   }, []);
+
+  const results = async (url, page) => {
+    if (page === '/foods') {
+      try {
+        const fetchApi = await fetch(url);
+        const result = await fetchApi.json();
+        const firstsResults = result.meals.filter((_item, idx) => idx < TWELVE);
+        setFoodRecipes(firstsResults);
+      } catch {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+    }
+    if (page === '/drinks') {
+      try {
+        const fetchApi = await fetch(url);
+        const result = await fetchApi.json();
+        const firstsResults = result.drinks.filter((_item, idx) => idx < TWELVE);
+        setDrinkRecipes(firstsResults);
+      } catch {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
+    }
+  };
+
+  const fetchFoodsOrDrinksRecipesFilter = async (searchRadio, searchText, page) => {
+    let urlIngredient = '';
+    let urlName = '';
+    let urlFirstLetter = '';
+    if (page === '/foods') {
+      urlIngredient = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchText}`;
+      urlName = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
+      urlFirstLetter = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchText}`;
+    }
+    if (page === '/drinks') {
+      urlIngredient = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchText}`;
+      urlName = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`;
+      urlFirstLetter = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchText}`;
+    }
+    if (searchRadio === 'ingredient') {
+      results(urlIngredient, page);
+    } else if (searchRadio === 'name') {
+      results(urlName, page);
+    } else if (searchRadio === 'firstLetter' && searchText.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    } else {
+      results(urlFirstLetter, page);
+    }
+  };
 
   const context = {
     state,
@@ -40,6 +88,7 @@ function RecipesProvider({ children }) {
     setIsDrink,
     foodsRecipes,
     drinkRecipes,
+    fetchFoodsOrDrinksRecipesFilter,
   };
 
   return (
