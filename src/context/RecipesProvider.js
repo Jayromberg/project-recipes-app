@@ -43,7 +43,7 @@ function RecipesProvider({ children }) {
   };
 
   return (
-    <recipesContext.Provider value={ { context } }>
+    <recipesContext.Provider value={ context }>
       {children}
     </recipesContext.Provider>
   );
