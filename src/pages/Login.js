@@ -51,8 +51,6 @@ function Login() {
             data-testid="login-submit-btn"
             disabled={ !(emailRegex() && validationPassword()) }
             onClick={ enableButton }
-            className={ `entrar-btn ${!(emailRegex() && validationPassword())
-              ? 'disable' : 'enable'}` }
           >
             Enter
           </button>
