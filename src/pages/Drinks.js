@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
+import Header from '../components/Header';
 
 function Drinks() {
   const { setIsDrink } = useContext(RecipesContext);
@@ -15,7 +16,7 @@ function Drinks() {
 
   return (
     <div>
-      <p>DRINKS</p>
+      <Header />
       <Recipes />
       <Footer />
     </div>

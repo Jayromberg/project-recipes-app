@@ -1,8 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function DoneRecipes() {
   return (
-    <div> DoneRecipes </div>
+    <div>
+      <Header />
+      <p>DoneRecipes</p>
+    </div>
   );
 }
 

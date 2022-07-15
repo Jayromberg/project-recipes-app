@@ -5,7 +5,7 @@ import recipesContext from './RecipesContext';
 const INICIAL_STATE = {};
 
 function RecipesProvider({ children }) {
-  const [state, setState] = useState(INICIAL_STATE);
+  const [state] = useState(INICIAL_STATE);
   const [isFood, setIsFood] = useState(false);
   const [isDrink, setIsDrink] = useState(false);
   const [foodsRecipes, setFoodRecipes] = useState([]);
