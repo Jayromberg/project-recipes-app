@@ -1,5 +1,7 @@
+
 import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 function Recipes({ withCategory, setWithCategory }) {
@@ -11,6 +13,22 @@ function Recipes({ withCategory, setWithCategory }) {
 
   const [All, setAll] = useState(true);
   const [categoryRecipe, setCategoryRecipe] = useState([]);
+  
+  const history = useHistory();
+  useEffect(() => {
+    if (foodsRecipes.length === 1) {
+      history.push(`/foods/${foodsRecipes[0].idMeal}`);
+    }
+    if (drinkRecipes.length === 1) {
+      history.push(`/drinks/${drinkRecipes[0].idDrink}`);
+    }
+  }, [drinkRecipes,
+    drinkRecipes.idDrink,
+    drinkRecipes.length,
+    foodsRecipes,
+    foodsRecipes.idMeal,
+    foodsRecipes.length,
+    history]);
 
   const changeCategory = useCallback(() => {
     setWithCategory(true);
