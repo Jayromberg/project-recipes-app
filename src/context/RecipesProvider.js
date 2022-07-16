@@ -10,7 +10,6 @@ function RecipesProvider({ children }) {
   const [isDrink, setIsDrink] = useState(false);
   const [foodsRecipes, setFoodRecipes] = useState([]);
   const [drinkRecipes, setDrinkRecipes] = useState([]);
-  const [email, setEmail] = useState('');
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [recipefromCategory, setRecipeCategory] = useState([]);
@@ -32,7 +31,7 @@ function RecipesProvider({ children }) {
       setFoodCategories(firstsResults);
     };
 
-    const FetchDrinksRecipes = async () => {
+    const FetchDriksRecipes = async () => {
       const fetchApi = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const results = await fetchApi.json();
       const firstsResults = results.drinks.filter((_item, idx) => idx < TWELVE);
@@ -48,7 +47,7 @@ function RecipesProvider({ children }) {
 
     FetchFoodsRecipes();
     FetchFoodsCategory();
-    FetchDrinksRecipes();
+    FetchDriksRecipes();
     FetchDriksCategories();
   }, []);
 
@@ -121,8 +120,6 @@ function RecipesProvider({ children }) {
     setIsDrink,
     foodsRecipes,
     drinkRecipes,
-    email,
-    setEmail,
     foodCategories,
     drinkCategories,
     fetchFoodsFromCategory,
