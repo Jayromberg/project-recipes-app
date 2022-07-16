@@ -10,6 +10,7 @@ function RecipesProvider({ children }) {
   const [isDrink, setIsDrink] = useState(false);
   const [foodsRecipes, setFoodRecipes] = useState([]);
   const [drinkRecipes, setDrinkRecipes] = useState([]);
+  const [email, setEmail] = useState('');
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [recipefromCategory, setRecipeCategory] = useState([]);
@@ -120,6 +121,8 @@ function RecipesProvider({ children }) {
     setIsDrink,
     foodsRecipes,
     drinkRecipes,
+    email,
+    setEmail,
     foodCategories,
     drinkCategories,
     fetchFoodsFromCategory,
