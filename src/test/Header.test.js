@@ -2,14 +2,34 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
+// import meals from '../../cypress/mocks/meals';
+// import drinks from '../../cypress/mocks/drinks';
 import App from '../App';
 
 const PAGE_TITLE_ID = 'page-title';
 const PROFILE_TOP_BTN_ID = 'profile-top-btn';
 const SEARCH_TOP_BTN_ID = 'search-top-btn';
 const SEARCH_INPUT_ID = 'search-input';
+// const MOCK_MEALS = meals;
+// const MOCK_DRINKS = drinks;
 
 describe('Testes do componente Header', () => {
+  // beforeEach(() => {
+  //   jest.spyOn(global, 'fetch')
+  //     .mockImplementation(async (url) => ({
+  //       json: async () => {
+  //         if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
+  //           return MOCK_MEALS;
+  //         }
+  //         if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
+  //           return MOCK_DRINKS;
+  //         }
+  //       },
+  //     }));
+  // });
+  // afterEach(() => {
+  //   global.fetch.mockRestore();
+  // });
   test('Testa se o Header NÂO é renderizado na pagina App', () => {
     renderWithRouter(<App />);
     const title = screen.queryByTestId(PAGE_TITLE_ID);
