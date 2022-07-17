@@ -14,6 +14,9 @@ function RecipesProvider({ children }) {
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [recipefromCategory, setRecipeCategory] = useState([]);
+  const [toggleCategory, settoggleCategory] = useState([]);
+  const [All, setAll] = useState(true);
+  const [withCategory, setWithCategory] = useState(false);
   const TWELVE = 12;
   const FIVE = 5;
 
@@ -113,6 +116,30 @@ function RecipesProvider({ children }) {
     }
   };
 
+  const toggle = (name) => {
+    console.log('DO PROVIDER');
+    toggleCategory.map((item) => {
+      if (item.category === name && item.toggleCategory === false) {
+        setAll(false);
+        setWithCategory(true);
+        item.toggleCategory = true;
+        console.log('dentro false', item);
+        console.log(All);
+        return item;
+      }
+      if (item.category === name && item.toggleCategory === true) {
+        setAll(true);
+        setWithCategory(false);
+        item.toggleCategory = false;
+        console.log('dentro true', item);
+        console.log(All);
+        return item;
+      }
+      console.log(toggleCategory);
+      return toggleCategory;
+    });
+  };
+
   const context = {
     state,
     isFood,
@@ -128,7 +155,13 @@ function RecipesProvider({ children }) {
     fetchFoodsFromCategory,
     recipefromCategory,
     fetchFoodsOrDrinksRecipesFilter,
-
+    toggle,
+    toggleCategory,
+    settoggleCategory,
+    All,
+    setAll,
+    withCategory,
+    setWithCategory,
   };
 
   return (

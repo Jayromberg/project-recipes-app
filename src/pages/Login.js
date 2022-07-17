@@ -37,24 +37,26 @@ function Login() {
             value={ emailInput }
             onChange={ (event) => setEmailInput(event.target.value) }
           />
+        </label>
+        <lable htmlFor="password-input">
           <input
             data-testid="password-input"
-            id="page-login"
+            id="password-input"
             type="password"
             name="password"
             minLength="6"
             placeholder="Digite a senha"
             onChange={ (event) => setPassword(event.target.value) }
           />
-          <button
-            type="button"
-            data-testid="login-submit-btn"
-            disabled={ !(emailRegex() && validationPassword()) }
-            onClick={ enableButton }
-          >
-            Enter
-          </button>
-        </label>
+        </lable>
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ !(emailRegex() && validationPassword()) }
+          onClick={ enableButton }
+        >
+          Enter
+        </button>
       </form>
     </div>
   );

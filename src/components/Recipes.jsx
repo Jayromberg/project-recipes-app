@@ -12,11 +12,24 @@ function Recipes({ withCategory, setWithCategory }) {
     foodCategories,
     drinkCategories,
     fetchFoodsFromCategory,
-    recipefromCategory } = useContext(RecipesContext);
+    recipefromCategory,
+    toggle,
+    settoggleCategory,
+    All,
+    setAll } = useContext(RecipesContext);
   const categories = isFood ? foodCategories : drinkCategories;
-
-  const [All, setAll] = useState(true);
   const [categoryRecipe, setCategoryRecipe] = useState([]);
+
+  useEffect(() => {
+    const auxiliar = [];
+    categories.forEach((elem) => {
+      const categoryObj = { category: elem.strCategory,
+        toggleCategory: false,
+      };
+      auxiliar.push(categoryObj);
+      settoggleCategory(auxiliar);
+    });
+  }, [categories]);
 
   const history = useHistory();
   useEffect(() => {
@@ -65,9 +78,11 @@ function Recipes({ withCategory, setWithCategory }) {
     changeCategory();
   }, [recipefromCategory, changeCategory]);
 
-  const selectCategory = async (category) => {
-    await fetchFoodsFromCategory(category);
-    setAll(false);
+  const selectCategory = async (event) => {
+    // console.log(event.target);
+    const { name } = event.target;
+    await fetchFoodsFromCategory(name);
+    toggle(name);
   };
 
   const getAll = () => {
@@ -78,16 +93,16 @@ function Recipes({ withCategory, setWithCategory }) {
   return (
     <div>
       { categories.map((item) => (
-        <section key={ item.strCategory }>
-          <button
-            data-testid={ `${item.strCategory}-category-filter` }
-            type="button"
-            onClick={ () => selectCategory(item.strCategory) }
-          >
-            {item.strCategory}
+        <button
+          key={ item.strCategory }
+          data-testid={ `${item.strCategory}-category-filter` }
+          type="button"
+          name={ item.strCategory }
+          onClick={ selectCategory }
+        >
+          {item.strCategory}
 
-          </button>
-        </section>
+        </button>
       ))}
       <button
         data-testid="All-category-filter"
