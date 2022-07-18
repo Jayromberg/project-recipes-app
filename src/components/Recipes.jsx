@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { PropTypes } from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
-function Recipes({ withCategory, setWithCategory }) {
+function Recipes() {
   const TWELVE = 12;
   const { isFood,
     isDrink,
@@ -16,7 +15,10 @@ function Recipes({ withCategory, setWithCategory }) {
     toggle,
     settoggleCategory,
     All,
-    setAll } = useContext(RecipesContext);
+    setAll,
+    setWithCategory,
+    withCategory,
+    toggleCategory } = useContext(RecipesContext);
   const categories = isFood ? foodCategories : drinkCategories;
   const [categoryRecipe, setCategoryRecipe] = useState([]);
 
@@ -57,6 +59,7 @@ function Recipes({ withCategory, setWithCategory }) {
         const filterFood = recipefromCategory.meals
           .filter((_item, index) => index < TWELVE)
           .map((item) => ({
+            type: 'foods',
             name: item.strMeal,
             image: item.strMealThumb,
             id: item.idMeal,
@@ -66,6 +69,7 @@ function Recipes({ withCategory, setWithCategory }) {
       } else if (recipefromCategory.drinks) {
         const filteDrink = recipefromCategory.drinks
           .filter((_item, index) => index < TWELVE).map((item) => ({
+            type: 'drinks',
             name: item.strDrink,
             image: item.strDrinkThumb,
             id: item.idDrink,
@@ -79,7 +83,6 @@ function Recipes({ withCategory, setWithCategory }) {
   }, [recipefromCategory, changeCategory]);
 
   const selectCategory = async (event) => {
-    // console.log(event.target);
     const { name } = event.target;
     await fetchFoodsFromCategory(name);
     toggle(name);
@@ -90,6 +93,7 @@ function Recipes({ withCategory, setWithCategory }) {
     setWithCategory(false);
   };
 
+  console.log(categoryRecipe);
   return (
     <div>
       { categories.map((item) => (
@@ -114,39 +118,41 @@ function Recipes({ withCategory, setWithCategory }) {
       </button>
       { categoryRecipe && withCategory && (categoryRecipe.map((item, index) => (
         <section data-testid={ `${index}-recipe-card` } key={ item.id }>
-          <img
-            src={ item.image }
-            alt={ item.name }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>{item.name}</p>
+          <Link to={ `/${item.type}/${item.id}` }>
+            <img
+              src={ item.image }
+              alt={ item.name }
+              data-testid={ `${index}-card-img` }
+            />
+            <p data-testid={ `${index}-card-name` }>{item.name}</p>
+          </Link>
         </section>
       ))) }
       { isFood && All && foodsRecipes.map((item, index) => (
         <section data-testid={ `${index}-recipe-card` } key={ item.idMeal }>
-          <img
-            src={ item.strMealThumb }
-            alt={ item.strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
+          <Link to={ `/foods/${item.idMeal}` }>
+            <img
+              src={ item.strMealThumb }
+              alt={ item.strMeal }
+              data-testid={ `${index}-card-img` }
+            />
+            <p data-testid={ `${index}-card-name` }>{item.strMeal}</p>
+          </Link>
         </section>
       )) }
       { isDrink && All && drinkRecipes.map((item, index) => (
         <section data-testid={ `${index}-recipe-card` } key={ item.idDrink }>
-          <img
-            src={ item.strDrinkThumb }
-            alt={ item.strDrink }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>{item.strDrink}</p>
+          <Link to={ `/drinks/${item.idDrink}` }>
+            <img
+              src={ item.strDrinkThumb }
+              alt={ item.strDrink }
+              data-testid={ `${index}-card-img` }
+            />
+            <p data-testid={ `${index}-card-name` }>{item.strDrink}</p>
+          </Link>
         </section>)) }
     </div>
   );
 }
 
-Recipes.propTypes = {
-  withCategory: PropTypes.bool.isRequired,
-  setWithCategory: PropTypes.func.isRequired,
-};
 export default Recipes;

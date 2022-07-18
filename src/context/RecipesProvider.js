@@ -117,25 +117,20 @@ function RecipesProvider({ children }) {
   };
 
   const toggle = (name) => {
-    console.log('DO PROVIDER');
     toggleCategory.map((item) => {
-      if (item.category === name && item.toggleCategory === false) {
+      if (item.category !== name) {
+        item.toggleCategory = false;
+      } else if (item.category === name && item.toggleCategory === false) {
         setAll(false);
         setWithCategory(true);
         item.toggleCategory = true;
-        console.log('dentro false', item);
-        console.log(All);
         return item;
-      }
-      if (item.category === name && item.toggleCategory === true) {
+      } else if (item.category === name && item.toggleCategory === true) {
         setAll(true);
         setWithCategory(false);
         item.toggleCategory = false;
-        console.log('dentro true', item);
-        console.log(All);
         return item;
       }
-      console.log(toggleCategory);
       return toggleCategory;
     });
   };

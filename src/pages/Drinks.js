@@ -5,15 +5,14 @@ import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 
 function Drinks() {
-  const { setIsDrink, withCategory, setWithCategory,
-    // toggleCategory, settoggleCategory
+  const { setIsDrink, setWithCategory, setAll,
   } = useContext(RecipesContext);
 
   const setTrue = useCallback(() => {
     setIsDrink(true);
+    setAll(true);
     setWithCategory(false);
-    // toggleCategory.forEach((item) => (settoggleCategory([item.toggleCategory]: false)));
-  }, [setIsDrink, setWithCategory]);
+  }, [setIsDrink, setWithCategory, setAll]);
 
   const setFalse = useCallback(() => {
     setIsDrink(false);
@@ -30,7 +29,7 @@ function Drinks() {
   return (
     <div>
       <Header />
-      <Recipes setWithCategory={ setWithCategory } withCategory={ withCategory } />
+      <Recipes />
       <Footer />
     </div>
   );
