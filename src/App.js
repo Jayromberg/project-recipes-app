@@ -19,7 +19,8 @@ import DetailProvider from './context/DetailProvider';
 function App() {
   return (
     <RecipesProvider>
-      {/* <div className="meals">
+      <DetailProvider>
+        {/* <div className="meals">
           <span className="logo">TRYBE</span>
           <object
           className="rocksGlass"
@@ -29,23 +30,22 @@ function App() {
           Glass
           </object>
         </div> */}
-      <Switch>
-        <Route
-          exact
-          path="/"
-          component={ Login }
-        />
-        <Route
-          exact
-          path="/foods"
-          component={ Foods }
-        />
-        <Route
-          exact
-          path="/drinks"
-          component={ Drinks }
-        />
-        <DetailProvider>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={ Login }
+          />
+          <Route
+            exact
+            path="/foods"
+            component={ Foods }
+          />
+          <Route
+            exact
+            path="/drinks"
+            component={ Drinks }
+          />
           <Route
             exact
             path="/foods/:id"
@@ -56,33 +56,33 @@ function App() {
             path="/drinks/:id"
             component={ DrinkDetail }
           />
-        </DetailProvider>
-        <Route
-          exact
-          path="/foods/:id/in-progress"
-          component={ FoodInProgress }
-        />
-        <Route
-          exact
-          path="/drinks/:id/in-progress"
-          component={ DrinkInProgress }
-        />
-        <Route
-          exact
-          path="/profile"
-          component={ Profile }
-        />
-        <Route
-          exact
-          path="/done-recipes"
-          component={ DoneRecipes }
-        />
-        <Route
-          exact
-          path="/favorite-recipes"
-          component={ FavoriteRecipes }
-        />
-      </Switch>
+          <Route
+            exact
+            path="/foods/:id/in-progress"
+            component={ FoodInProgress }
+          />
+          <Route
+            exact
+            path="/drinks/:id/in-progress"
+            component={ DrinkInProgress }
+          />
+          <Route
+            exact
+            path="/profile"
+            component={ Profile }
+          />
+          <Route
+            exact
+            path="/done-recipes"
+            component={ DoneRecipes }
+          />
+          <Route
+            exact
+            path="/favorite-recipes"
+            component={ FavoriteRecipes }
+          />
+        </Switch>
+      </DetailProvider>
     </RecipesProvider>
   );
 }
