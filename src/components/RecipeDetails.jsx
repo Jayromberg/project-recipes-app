@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
+import DetailContext from '../context/DetailContext';
+import RecomendationCard from './RecomendationCard';
 
 function RecipeDetails() {
   const history = useRouteMatch();
@@ -8,10 +10,13 @@ function RecipeDetails() {
     dataDetail,
     fetchDetailFoods,
     fetchDetailDrinks,
+  } = useContext(DetailContext);
+  const {
+    foodsRecipes,
+    drinkRecipes,
   } = useContext(RecipesContext);
   const [ingredient, setIngredient] = useState([]);
   const [measure, setMeasure] = useState([]);
-  console.log(history.params.id);
 
   useEffect(() => {
     if (history.url.includes('foods')) {
@@ -34,7 +39,8 @@ function RecipeDetails() {
     }
   }, [dataDetail]);
 
-  console.log(dataDetail[0]);
+  const FIVE = 5;
+
   return (
     dataDetail.length > 0 && (
       <div>
@@ -80,14 +86,33 @@ function RecipeDetails() {
           <div>
             <iframe
               data-testid="video"
-              // width="560"
-              // height="315"
+              width="100%"
+              height="200"
               src={ dataDetail[0].strYoutube.replace('watch?v=', 'embed/') }
               title="YouTube video player"
               frameBorder="0"
             />
           </div>)}
-        <p data-testid="0-recomendation-card">recomendações</p>
+        <p>recomendações</p>
+        {history.url.includes('drinks') ? (
+          foodsRecipes.filter((_food, index) => index <= FIVE)
+            .map((food, index) => (
+              <RecomendationCard
+                key={ food.strMeal }
+                { ...food }
+                index={ index }
+              />
+            ))
+        ) : (
+          drinkRecipes.filter((_food, index) => index <= FIVE)
+            .map((drink, index) => (
+              <RecomendationCard
+                key={ drink.strDrink }
+                { ...drink }
+                index={ index }
+              />
+            ))
+        )}
       </div>)
   );
 }

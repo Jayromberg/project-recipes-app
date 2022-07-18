@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import recipesContext from './RecipesContext';
+import RecipesContext from './RecipesContext';
 
 const INICIAL_STATE = {};
 
@@ -132,9 +132,9 @@ function RecipesProvider({ children }) {
   };
 
   return (
-    <recipesContext.Provider value={ context }>
+    <RecipesContext.Provider value={ context }>
       {children}
-    </recipesContext.Provider>
+    </RecipesContext.Provider>
   );
 }
 

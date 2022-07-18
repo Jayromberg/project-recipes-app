@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import recipesContext from './RecipesContext';
+import DetailContext from './DetailContext';
 
 function DetailProvider({ children }) {
   const [dataDetail, setDataDetail] = useState([]);
@@ -24,9 +24,9 @@ function DetailProvider({ children }) {
   };
 
   return (
-    <recipesContext.Provider value={ detailContext }>
+    <DetailContext.Provider value={ detailContext }>
       {children}
-    </recipesContext.Provider>
+    </DetailContext.Provider>
   );
 }
 
