@@ -11,27 +11,30 @@ function Recipes() {
     foodCategories,
     drinkCategories,
     fetchFoodsFromCategory,
-    recipefromCategory,
+    recipeFromCategory,
     toggle,
-    settoggleCategory,
+    setToggleCategory,
     All,
     setAll,
     setWithCategory,
-    withCategory,
-    toggleCategory } = useContext(RecipesContext);
+    withCategory } = useContext(RecipesContext);
   const categories = isFood ? foodCategories : drinkCategories;
   const [categoryRecipe, setCategoryRecipe] = useState([]);
 
-  useEffect(() => {
-    const auxiliar = [];
+  const createCategoriesObj = useCallback(() => {
+    const auxiliary = [];
     categories.forEach((elem) => {
       const categoryObj = { category: elem.strCategory,
         toggleCategory: false,
       };
-      auxiliar.push(categoryObj);
-      settoggleCategory(auxiliar);
+      auxiliary.push(categoryObj);
+      setToggleCategory(auxiliary);
     });
-  }, [categories]);
+  }, [categories, setToggleCategory]);
+
+  useEffect(() => {
+    createCategoriesObj();
+  }, [createCategoriesObj]);
 
   const history = useHistory();
   useEffect(() => {
@@ -55,32 +58,34 @@ function Recipes() {
 
   useEffect(() => {
     const filterSelectedCategory = () => {
-      if (recipefromCategory.meals) {
-        const filterFood = recipefromCategory.meals
-          .filter((_item, index) => index < TWELVE)
-          .map((item) => ({
-            type: 'foods',
-            name: item.strMeal,
-            image: item.strMealThumb,
-            id: item.idMeal,
-          }));
+      if (recipeFromCategory) {
+        if (recipeFromCategory.meals) {
+          const filterFood = recipeFromCategory.meals
+            .filter((_item, index) => index < TWELVE)
+            .map((item) => ({
+              type: 'foods',
+              name: item.strMeal,
+              image: item.strMealThumb,
+              id: item.idMeal,
+            }));
 
-        setCategoryRecipe(filterFood);
-      } else if (recipefromCategory.drinks) {
-        const filteDrink = recipefromCategory.drinks
-          .filter((_item, index) => index < TWELVE).map((item) => ({
-            type: 'drinks',
-            name: item.strDrink,
-            image: item.strDrinkThumb,
-            id: item.idDrink,
-          }));
+          setCategoryRecipe(filterFood);
+        } else if (recipeFromCategory.drinks) {
+          const filterDrink = recipeFromCategory.drinks
+            .filter((_item, index) => index < TWELVE).map((item) => ({
+              type: 'drinks',
+              name: item.strDrink,
+              image: item.strDrinkThumb,
+              id: item.idDrink,
+            }));
 
-        setCategoryRecipe(filteDrink);
+          setCategoryRecipe(filterDrink);
+        }
       }
     };
     filterSelectedCategory();
     changeCategory();
-  }, [recipefromCategory, changeCategory]);
+  }, [recipeFromCategory, changeCategory]);
 
   const selectCategory = async (event) => {
     const { name } = event.target;
@@ -93,7 +98,6 @@ function Recipes() {
     setWithCategory(false);
   };
 
-  console.log(categoryRecipe);
   return (
     <div>
       { categories.map((item) => (

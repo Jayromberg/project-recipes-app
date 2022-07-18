@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import recipesContext from './RecipesContext';
 
-const INICIAL_STATE = {};
-
 function RecipesProvider({ children }) {
-  const [state] = useState(INICIAL_STATE);
   const [isFood, setIsFood] = useState(false);
   const [isDrink, setIsDrink] = useState(false);
   const [foodsRecipes, setFoodRecipes] = useState([]);
@@ -13,8 +10,8 @@ function RecipesProvider({ children }) {
   const [email, setEmail] = useState('');
   const [foodCategories, setFoodCategories] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
-  const [recipefromCategory, setRecipeCategory] = useState([]);
-  const [toggleCategory, settoggleCategory] = useState([]);
+  const [recipeFromCategory, setRecipeCategory] = useState([]);
+  const [toggleCategory, setToggleCategory] = useState([]);
   const [All, setAll] = useState(true);
   const [withCategory, setWithCategory] = useState(false);
   const TWELVE = 12;
@@ -24,35 +21,43 @@ function RecipesProvider({ children }) {
     const FetchFoodsRecipes = async () => {
       const fetchApi = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const result = await fetchApi.json();
-      const firstsResults = result.meals.filter((_item, idx) => idx < TWELVE);
-      setFoodRecipes(firstsResults);
+      if (result) {
+        const firstsResults = result.meals.filter((_item, idx) => idx < TWELVE);
+        setFoodRecipes(firstsResults);
+      }
     };
 
     const FetchFoodsCategory = async () => {
       const fetchApi = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const result = await fetchApi.json();
-      const firstsResults = result.meals.filter((_item, idx) => idx < FIVE);
-      setFoodCategories(firstsResults);
+      if (result) {
+        const firstsResults = result.meals.filter((_item, idx) => idx < FIVE);
+        setFoodCategories(firstsResults);
+      }
     };
 
-    const FetchDriksRecipes = async () => {
+    const FetchDrinksRecipes = async () => {
       const fetchApi = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const results = await fetchApi.json();
-      const firstsResults = results.drinks.filter((_item, idx) => idx < TWELVE);
-      setDrinkRecipes(firstsResults);
+      if (results) {
+        const firstsResults = results.drinks.filter((_item, idx) => idx < TWELVE);
+        setDrinkRecipes(firstsResults);
+      }
     };
 
-    const FetchDriksCategories = async () => {
+    const FetchDrinksCategories = async () => {
       const fetchApi = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
       const results = await fetchApi.json();
-      const firstsResults = results.drinks.filter((_item, idx) => idx < FIVE);
-      setDrinkCategories(firstsResults);
+      if (results) {
+        const firstsResults = results.drinks.filter((_item, idx) => idx < FIVE);
+        setDrinkCategories(firstsResults);
+      }
     };
 
     FetchFoodsRecipes();
     FetchFoodsCategory();
-    FetchDriksRecipes();
-    FetchDriksCategories();
+    FetchDrinksRecipes();
+    FetchDrinksCategories();
   }, []);
 
   const fetchFoodsFromCategory = async (category) => {
@@ -136,7 +141,6 @@ function RecipesProvider({ children }) {
   };
 
   const context = {
-    state,
     isFood,
     setIsFood,
     isDrink,
@@ -148,11 +152,11 @@ function RecipesProvider({ children }) {
     foodCategories,
     drinkCategories,
     fetchFoodsFromCategory,
-    recipefromCategory,
+    recipeFromCategory,
     fetchFoodsOrDrinksRecipesFilter,
     toggle,
     toggleCategory,
-    settoggleCategory,
+    setToggleCategory,
     All,
     setAll,
     withCategory,

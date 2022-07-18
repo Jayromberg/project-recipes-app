@@ -38,7 +38,7 @@ function Login() {
             onChange={ (event) => setEmailInput(event.target.value) }
           />
         </label>
-        <lable htmlFor="password-input">
+        <label htmlFor="password-input">
           <input
             data-testid="password-input"
             id="password-input"
@@ -48,7 +48,7 @@ function Login() {
             placeholder="Digite a senha"
             onChange={ (event) => setPassword(event.target.value) }
           />
-        </lable>
+        </label>
         <button
           type="button"
           data-testid="login-submit-btn"
