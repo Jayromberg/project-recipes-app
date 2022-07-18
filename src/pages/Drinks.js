@@ -1,17 +1,18 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 
 function Drinks() {
-  const { setIsDrink } = useContext(RecipesContext);
-  const [withCategory, setWithCategory] = useState(false);
+  const { setIsDrink, setWithCategory, setAll,
+  } = useContext(RecipesContext);
 
   const setTrue = useCallback(() => {
     setIsDrink(true);
+    setAll(true);
     setWithCategory(false);
-  }, [setIsDrink, setWithCategory]);
+  }, [setIsDrink, setWithCategory, setAll]);
 
   const setFalse = useCallback(() => {
     setIsDrink(false);
@@ -28,7 +29,7 @@ function Drinks() {
   return (
     <div>
       <Header />
-      <Recipes setWithCategory={ setWithCategory } withCategory={ withCategory } />
+      <Recipes />
       <Footer />
     </div>
   );
