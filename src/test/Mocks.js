@@ -185,3 +185,25 @@ export const acbDrinkData = {
       strVideo: null,
     }],
 };
+
+// import mealCategories from '../../cypress/mocks/mealCategories';
+// import beefMeals from '../../cypress/mocks/beefMeals';
+// import drinkCategories from '../../cypress/mocks/drinkCategories';
+// import { acbDrinkData, burekData, poutineData } from './Mocks';
+
+// if (url === 'https://www.themealdb.com/api/json/v1/1/list.php?c=list') {
+//   return mealCategories;
+// }
+
+// if (url === 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list') {
+//   return drinkCategories;
+// }
+// if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=53060') {
+//   return burekData;
+// }
+// if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52804') {
+//   return poutineData;
+// }
+// if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=13501') {
+//   return acbDrinkData;
+// }

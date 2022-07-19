@@ -3,12 +3,13 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import meals from '../../cypress/mocks/meals';
-// import mealCategories from '../../cypress/mocks/mealCategories';
-// import beefMeals from '../../cypress/mocks/beefMeals';
 import drinks from '../../cypress/mocks/drinks';
-// import drinkCategories from '../../cypress/mocks/drinkCategories';
 import App from '../App';
-import { acbDrinkData, burekData, poutineData } from './Mocks';
+// import oneMeal from '../../cypress/mocks/oneMeal';
+import oneDrink from '../../cypress/mocks/oneDrink';
+// import oneDrinkId15997 from '../../cypress/mocks/oneDrinkId15997';
+import acbDrinkData from './acbMock';
+import poutineData from './poutineMock';
 
 describe('testa as rotas dentro do componente App', () => {
   beforeEach(() => {
@@ -17,23 +18,19 @@ describe('testa as rotas dentro do componente App', () => {
         if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
           return meals;
         }
-        // if (url === 'https://www.themealdb.com/api/json/v1/1/list.php?c=list') {
-        //   return mealCategories;
-        // }
         if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
           return drinks;
         }
-        // if (url === 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list') {
-        //   return drinkCategories;
+        // if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771') {
+        //   return oneMeal;
         // }
-        if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=53060') {
-          return burekData;
+        if (url === 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=178319') {
+          return oneDrink;
+        } if (url === 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13501') {
+          return acbDrinkData;
         }
         if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52804') {
           return poutineData;
-        }
-        if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=13501') {
-          return acbDrinkData;
         }
       },
     }));
@@ -43,7 +40,7 @@ describe('testa as rotas dentro do componente App', () => {
   });
   it('testa se redireciona para a tela detalhada pelo filtro do header', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/foods');
+    history.push('/drinks');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();
     userEvent.click(searchEl);
@@ -54,12 +51,15 @@ describe('testa as rotas dentro do componente App', () => {
     expect(inputEl).toBeInTheDocument();
     expect(radioEl).toBeInTheDocument();
     expect(buttonEl).toBeInTheDocument();
-    userEvent.type(inputEl, 'burek');
+    userEvent.type(inputEl, 'Aquamarine');
     userEvent.click(radioEl);
     userEvent.click(buttonEl);
+    // console.log(buttonEl);
+    // console.log(history);
 
     // await waitFor(() => {
-    //   expect(screen.getByText(/fooddetail/i)).toBeInTheDocument();
+    //   expect(screen.getByRole('heading', { name: /Aquamarine/i }))
+    //     .toBeInTheDocument();
     // });
   });
   it(`testa se ao clicar em uma receita ela redireciona 
@@ -71,10 +71,9 @@ describe('testa as rotas dentro do componente App', () => {
 
     userEvent.click(foodEl);
 
-    // await waitFor(() => {
-    //   expect(screen.getByText(/fooddetail/i)).toBeInTheDocument();
-    //   // expect(history.location.pathname).toBe('/foods/52804');
-    // });
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /poutine/i })).toBeInTheDocument();
+    });
   });
   it(`testa se ao clicar em uma receita ela redireciona 
   para a página de detalhes da receita`, async () => {

@@ -16,7 +16,6 @@ function DetailProvider({ children }) {
   const fetchDetailDrinks = async (id) => {
     const resolve = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     const data = await resolve.json();
-    console.log(data);
     if (data) {
       setDataDetail(data.drinks);
     }
