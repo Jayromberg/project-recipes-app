@@ -4,6 +4,7 @@ import { useRouteMatch } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DetailContext from '../context/DetailContext';
 import RecomendationCard from './RecomendationCard';
+import IngredientsList from './IngredientsList';
 
 function RecipeDetails() {
   const history = useRouteMatch();
@@ -71,27 +72,10 @@ function RecipeDetails() {
             <h4 data-testid="recipe-category">{dataDetail[0].strAlcoholic}</h4>
           </div>
         )}
-        <ul>
-          {ingredient
-            .map((item, index) => (
-              measure[index]
-                ? (
-                  <li
-                    key={ item[0] }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${item[1]} ${measure[index][1]}`}
-                  </li>
-                ) : (
-                  <li
-                    key={ item[0] }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    { item[1] }
-                  </li>
-                )
-            ))}
-        </ul>
+        <IngredientsList
+          ingredient={ ingredient }
+          measure={ measure }
+        />
         <p data-testid="instructions">{dataDetail[0].strInstructions}</p>
         {history.url.includes('foods')
         && (

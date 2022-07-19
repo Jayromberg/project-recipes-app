@@ -40,14 +40,23 @@ function RecomendationCard(props) {
   );
 }
 
+RecomendationCard.defaultProps = {
+  strMealThumb: '',
+  strMeal: '',
+  strCategory: '',
+  strDrinkThumb: '',
+  strDrink: '',
+  strAlcoholic: '',
+};
+
 RecomendationCard.propTypes = {
   index: PropTypes.number.isRequired,
-  strMealThumb: PropTypes.string.isRequired,
-  strMeal: PropTypes.string.isRequired,
-  strCategory: PropTypes.string.isRequired,
-  strDrinkThumb: PropTypes.string.isRequired,
-  strDrink: PropTypes.string.isRequired,
-  strAlcoholic: PropTypes.string.isRequired,
+  strMealThumb: PropTypes.string,
+  strMeal: PropTypes.string,
+  strCategory: PropTypes.string,
+  strDrinkThumb: PropTypes.string,
+  strDrink: PropTypes.string,
+  strAlcoholic: PropTypes.string,
 };
 
 export default RecomendationCard;
