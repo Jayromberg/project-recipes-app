@@ -1,0 +1,15 @@
+img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.item {
+  border: 1px solid black;
+  flex: none;
+  height: 300px;
+  margin: 10px;
+  pointer-events: none;
+  scroll-snap-align: start;
+  width: 50%;
+}
