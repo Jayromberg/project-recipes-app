@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom/';
+import './RecipeDetails.css';
+import { useRouteMatch } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DetailContext from '../context/DetailContext';
 import RecomendationCard from './RecomendationCard';
@@ -105,25 +106,38 @@ function RecipeDetails() {
             />
           </div>)}
         <p>recomendações</p>
-        {history.url.includes('drinks') ? (
-          foodsRecipes.filter((_food, index) => index <= FIVE)
-            .map((food, index) => (
-              <RecomendationCard
-                key={ food.strMeal }
-                { ...food }
-                index={ index }
-              />
-            ))
-        ) : (
-          drinkRecipes.filter((_food, index) => index <= FIVE)
-            .map((drink, index) => (
-              <RecomendationCard
-                key={ drink.strDrink }
-                { ...drink }
-                index={ index }
-              />
-            ))
-        )}
+        <div className="item-wrapper">
+          <div
+            className="items"
+            onWheel={ (event) => {
+              if (event.deltaY > 0) {
+                event.target.scrollBy(FIVE, 0);
+              } else {
+                event.target.scrollBy(-FIVE, 0);
+              }
+            } }
+          >
+            {history.url.includes('drinks') ? (
+              foodsRecipes.filter((_food, index) => index <= FIVE)
+                .map((food, index) => (
+                  <RecomendationCard
+                    key={ food.strMeal }
+                    { ...food }
+                    index={ index }
+                  />
+                ))
+            ) : (
+              drinkRecipes.filter((_food, index) => index <= FIVE)
+                .map((drink, index) => (
+                  <RecomendationCard
+                    key={ drink.strDrink }
+                    { ...drink }
+                    index={ index }
+                  />
+                ))
+            )}
+          </div>
+        </div>
       </div>)
   );
 }

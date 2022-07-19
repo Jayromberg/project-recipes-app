@@ -1,4 +1,5 @@
 import React from 'react';
+import './RecomendationCard.css';
 import PropTypes from 'prop-types';
 
 function RecomendationCard(props) {
@@ -12,29 +13,28 @@ function RecomendationCard(props) {
     strAlcoholic,
   } = props;
   return (
-    <div data-testid={ `${index}-recomendation-card` }>
+    <div
+      className="item"
+      data-testid={ `${index}-recomendation-card` }
+    >
       {strMeal ? (
-        <div>
+        <>
           <img
-            width="40%"
-            height="150"
             src={ strMealThumb }
             alt={ strMeal }
           />
           <p>{strCategory}</p>
           <h4 data-testid={ `${index}-recomendation-title` }>{strMeal}</h4>
-        </div>
+        </>
       ) : (
-        <div>
+        <>
           <img
-            width="40%"
-            height="150"
             src={ strDrinkThumb }
             alt={ strDrink }
           />
           <p>{strAlcoholic}</p>
           <h4 data-testid={ `${index}-recomendation-title` }>{strDrink}</h4>
-        </div>
+        </>
       )}
     </div>
   );
