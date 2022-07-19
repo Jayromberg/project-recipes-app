@@ -8,6 +8,7 @@ import IngredientsList from './IngredientsList';
 
 function RecipeDetails() {
   const history = useRouteMatch();
+
   const {
     dataDetail,
     fetchDetailFoods,

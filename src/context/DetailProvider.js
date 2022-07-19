@@ -8,13 +8,17 @@ function DetailProvider({ children }) {
   const fetchDetailFoods = async (id) => {
     const resolve = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const data = await resolve.json();
-    setDataDetail(data.meals);
+    if (data) {
+      setDataDetail(data.meals);
+    }
   };
 
   const fetchDetailDrinks = async (id) => {
     const resolve = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     const data = await resolve.json();
-    setDataDetail(data.drinks);
+    if (data) {
+      setDataDetail(data.drinks);
+    }
   };
 
   const detailContext = {

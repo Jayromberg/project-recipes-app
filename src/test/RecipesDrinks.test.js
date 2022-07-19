@@ -109,18 +109,4 @@ describe('testa o componente Recipes na página Drinks', () => {
       expect(screen.queryByRole('img', { name: /gg/i })).toBeInTheDocument();
     });
   });
-  it(`testa se ao clicar em uma receita ela redireciona 
-  para a página de detalhes da receita`, async () => {
-    // const { history } = renderWithRouter(<App />);
-    // history.push('/foods');
-    const drinlEl = await screen.findByText(/abc/i);
-    expect(drinlEl).toBeInTheDocument();
-
-    userEvent.click(drinlEl);
-
-    await waitFor(() => {
-      expect(screen.getByText(/drinkdetail/i)).toBeInTheDocument();
-      // expect(history.location.pathname).toBe('/foods/52804');
-    });
-  });
 });
