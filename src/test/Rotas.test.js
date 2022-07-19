@@ -12,6 +12,7 @@ import poutineData from './poutineMock';
 import meals from '../../cypress/mocks/meals';
 import RecipesProvider from '../context/RecipesProvider';
 
+const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
 describe('testa as rotas dentro do componente App', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
@@ -27,7 +28,7 @@ describe('testa as rotas dentro do componente App', () => {
         }
       },
     }));
-    const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
+
     jest.spyOn(global, 'alert')
       .mockImplementation(() => ALERT);
   });
@@ -81,8 +82,7 @@ describe('testa as rotas dentro do componente App', () => {
     userEvent.click(buttonEl);
 
     await waitFor(() => {
-      const ALERTA = 'Sorry, we haven\'t found any recipes for these filters.';
-      expect(global.alert()).toBe(ALERTA);
+      expect(global.alert()).toBe(ALERT);
       expect(global.alert).toBeCalled();
     });
   });
@@ -102,7 +102,7 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
         }
       },
     }));
-    const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
+
     jest.spyOn(global, 'alert')
       .mockImplementation(() => ALERT);
   });
@@ -173,9 +173,9 @@ describe('testa o segundo mock do global Alert', () => {
         }
       },
     }));
-    const ALERT = 'Your search must have only 1 (one) character';
+
     jest.spyOn(global, 'alert')
-      .mockImplementation(() => ALERT);
+      .mockImplementation(() => 'Your search must have only 1 (one) character');
   });
   afterEach(() => {
     global.fetch.mockRestore();
