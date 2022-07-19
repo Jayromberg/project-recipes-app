@@ -111,18 +111,4 @@ describe('testa o componente Recipes na página Foods', () => {
       expect(screen.queryByRole('img', { name: /corba/i })).toBeInTheDocument();
     });
   });
-  it(`testa se ao clicar em uma receita ela redireciona 
-  para a página de detalhes da receita`, async () => {
-    // const { history } = renderWithRouter(<App />);
-    // history.push('/foods');
-    const foodEl = await screen.findByText(/poutine/i);
-    expect(foodEl).toBeInTheDocument();
-
-    userEvent.click(foodEl);
-
-    await waitFor(() => {
-      expect(screen.getByText(/fooddetail/i)).toBeInTheDocument();
-      // expect(history.location.pathname).toBe('/foods/52804');
-    });
-  });
 });

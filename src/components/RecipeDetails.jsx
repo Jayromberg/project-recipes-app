@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import { useRouteMatch } from 'react-router-dom/';
 import RecipesContext from '../context/RecipesContext';
 import DetailContext from '../context/DetailContext';
 import RecomendationCard from './RecomendationCard';
 
 function RecipeDetails() {
   const history = useRouteMatch();
+
   const {
     dataDetail,
     fetchDetailFoods,
