@@ -9,6 +9,7 @@ img {
   flex: none;
   height: 300px;
   margin: 10px;
+  margin-bottom: 100px;
   pointer-events: none;
   scroll-snap-align: start;
   width: 50%;

@@ -5,6 +5,9 @@ import RecipesContext from '../context/RecipesContext';
 import DetailContext from '../context/DetailContext';
 import RecomendationCard from './RecomendationCard';
 import IngredientsList from './IngredientsList';
+import StartRecipeButton from './StartRecipeButton';
+import FavoriteButton from './FavoriteButton';
+import ShareButton from './ShareButton';
 
 function RecipeDetails() {
   const history = useRouteMatch();
@@ -47,6 +50,8 @@ function RecipeDetails() {
   return (
     dataDetail.length > 0 && (
       <div>
+        <FavoriteButton />
+        <ShareButton />
         {history.url.includes('foods') ? (
           <div>
             <img
@@ -89,7 +94,6 @@ function RecipeDetails() {
               frameBorder="0"
             />
           </div>)}
-        <p>recomendações</p>
         <div className="item-wrapper">
           <div
             className="items"
@@ -121,6 +125,11 @@ function RecipeDetails() {
                 ))
             )}
           </div>
+        </div>
+        <div>
+          <StartRecipeButton
+            id={ history.params.id }
+          />
         </div>
       </div>)
   );
