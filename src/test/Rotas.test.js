@@ -12,6 +12,7 @@ import poutineData from './poutineMock';
 import meals from '../../cypress/mocks/meals';
 import RecipesProvider from '../context/RecipesProvider';
 
+const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
 describe('testa as rotas dentro do componente App', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
@@ -27,7 +28,7 @@ describe('testa as rotas dentro do componente App', () => {
         }
       },
     }));
-    const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
+
     jest.spyOn(global, 'alert')
       .mockImplementation(() => ALERT);
   });
@@ -64,6 +65,27 @@ describe('testa as rotas dentro do componente App', () => {
       expect(screen.getByRole('heading', { name: /abc/i })).toBeInTheDocument();
     });
   });
+  it('testa o global Alert em Drinks', async () => {
+    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    history.push('/drinks');
+    const searchEl = await screen.findByRole('img', { name: /searchicon/i });
+    expect(searchEl).toBeInTheDocument();
+    userEvent.click(searchEl);
+    const inputEl = await screen.findByRole('textbox');
+    const radioEl = await screen.findByRole('radio', { name: /nome/i });
+    const buttonEl = await screen.findByRole('button', { name: /busca/i });
+    expect(inputEl).toBeInTheDocument();
+    expect(radioEl).toBeInTheDocument();
+    expect(buttonEl).toBeInTheDocument();
+    userEvent.type(inputEl, 'sssssssssssss');
+    userEvent.click(radioEl);
+    userEvent.click(buttonEl);
+
+    await waitFor(() => {
+      expect(global.alert()).toBe(ALERT);
+      expect(global.alert).toBeCalled();
+    });
+  });
 });
 describe('testa as rotas da página de comidas e bebidas para a tela de detalhe', () => {
   beforeEach(() => {
@@ -80,7 +102,7 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
         }
       },
     }));
-    const ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
+
     jest.spyOn(global, 'alert')
       .mockImplementation(() => ALERT);
   });
@@ -115,6 +137,69 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
     userEvent.click(foodEl);
     await waitFor(() => {
       expect(screen.getByRole('heading', { name: /poutine/i })).toBeInTheDocument();
+    });
+  });
+
+  it('testa o global Alert em foods', async () => {
+    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    history.push('/foods');
+    const searchEl = await screen.findByRole('img', { name: /searchicon/i });
+    expect(searchEl).toBeInTheDocument();
+    userEvent.click(searchEl);
+    const inputEl = await screen.findByRole('textbox');
+    const radioEl = await screen.findByRole('radio', { name: /ingrediente/i });
+    const buttonEl = await screen.findByRole('button', { name: /busca/i });
+    expect(inputEl).toBeInTheDocument();
+    expect(radioEl).toBeInTheDocument();
+    expect(buttonEl).toBeInTheDocument();
+    userEvent.type(inputEl, 'rrrrrr');
+    userEvent.click(radioEl);
+    userEvent.click(buttonEl);
+
+    await waitFor(() => {
+      expect(global.alert())
+        .toBe('Sorry, we haven\'t found any recipes for these filters.');
+      expect(global.alert).toBeCalled();
+    });
+  });
+});
+
+describe('testa o segundo mock do global Alert', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
+      json: async () => {
+        if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
+          return meals;
+        }
+      },
+    }));
+
+    jest.spyOn(global, 'alert')
+      .mockImplementation(() => 'Your search must have only 1 (one) character');
+  });
+  afterEach(() => {
+    global.fetch.mockRestore();
+  });
+  it('testa o global Alert com duas letras', async () => {
+    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    history.push('/foods');
+    const searchEl = await screen.findByRole('img', { name: /searchicon/i });
+    expect(searchEl).toBeInTheDocument();
+    userEvent.click(searchEl);
+    const inputEl = await screen.findByRole('textbox');
+    const radioEl = await screen.findByRole('radio', { name: /primeira letra/i });
+    const buttonEl = await screen.findByRole('button', { name: /busca/i });
+    expect(inputEl).toBeInTheDocument();
+    expect(radioEl).toBeInTheDocument();
+    expect(buttonEl).toBeInTheDocument();
+    userEvent.type(inputEl, 'ee');
+    userEvent.click(radioEl);
+    userEvent.click(buttonEl);
+
+    await waitFor(() => {
+      expect(global.alert())
+        .toBe('Your search must have only 1 (one) character');
+      expect(global.alert).toBeCalled();
     });
   });
 });
