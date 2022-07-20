@@ -8,12 +8,13 @@ import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import FoodDetail from './pages/FoodDetail';
 import DrinkDetail from './pages/DrinkDetail';
-import FoodInProgress from './pages/FoodInProgress';
-import DrinkInProgress from './pages/DrinkInProgress';
+// import FoodInProgress from './pages/FoodInProgress';
+// import DrinkInProgress from './pages/DrinkInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/favoriteRecipes';
 import DetailProvider from './context/DetailProvider';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
@@ -48,12 +49,12 @@ function App() {
           <Route
             exact
             path="/foods/:id/in-progress"
-            component={ FoodInProgress }
+            component={ RecipeInProgress }
           />
           <Route
             exact
             path="/drinks/:id/in-progress"
-            component={ DrinkInProgress }
+            component={ RecipeInProgress }
           />
           <Route
             exact
