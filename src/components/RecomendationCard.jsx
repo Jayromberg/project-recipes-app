@@ -12,6 +12,7 @@ function RecomendationCard(props) {
     strDrink,
     strAlcoholic,
   } = props;
+
   return (
     <div
       className="item"
