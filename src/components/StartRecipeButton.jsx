@@ -15,6 +15,9 @@ function StartRecipeButton({ id }) {
       const recipes = JSON.parse(doneRecipesLocal);
       setIsVisible(!recipes.some((recipe) => recipe.id === id));
     }
+    if (isInProgress) {
+      setIsVisible(false);
+    }
     if (inProgressRecipesLocal && pathname.includes('foods')) {
       const recipes = JSON.parse(inProgressRecipesLocal);
       const keysFoods = Object.keys(recipes.meals);
@@ -25,7 +28,7 @@ function StartRecipeButton({ id }) {
       const keysDrinks = Object.keys(recipes.cocktails);
       setIsInProgress(keysDrinks.some((recipeID) => recipeID === id));
     }
-  }, [history.location, id]);
+  }, [history.location, id, isInProgress]);
 
   function redirect() {
     const { pathname } = history.location;

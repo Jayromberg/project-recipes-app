@@ -50,7 +50,9 @@ function RecipeDetails() {
   return (
     dataDetail.length > 0 && (
       <div>
-        <FavoriteButton />
+        <FavoriteButton
+          dataDetail={ dataDetail }
+        />
         <ShareButton />
         {history.url.includes('foods') ? (
           <div>
