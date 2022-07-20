@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
 import DetailContext from '../context/DetailContext';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
+import Header from './Header';
+import IngredientsProgress from './IngredientsProgress';
 
 function RecipeProgress() {
   const history = useRouteMatch();
@@ -13,12 +14,9 @@ function RecipeProgress() {
     fetchDetailFoods,
     fetchDetailDrinks,
   } = useContext(DetailContext);
-  const {
-    foodsRecipes,
-    drinkRecipes,
-  } = useContext(RecipesContext);
   const [ingredient, setIngredient] = useState([]);
   const [measure, setMeasure] = useState([]);
+  const [done, setDone] = useState([]);
 
   useEffect(() => {
     if (history.url.includes('foods')) {
@@ -43,9 +41,19 @@ function RecipeProgress() {
 
   const FIVE = 5;
 
+  const onClick = ({ target }) => {
+    if (target.checked === true) {
+      setDone([...done, target.value]);
+    } else {
+      const result = done.filter((item) => item !== target.value);
+      setDone(result);
+    }
+  };
+
   return (
     dataDetail.length > 0 && (
       <div>
+        <Header />
         <FavoriteButton
           dataDetail={ dataDetail }
         />
@@ -75,31 +83,13 @@ function RecipeProgress() {
             <h4 data-testid="recipe-category">{dataDetail[0].strAlcoholic}</h4>
           </div>
         )}
-        <ul>
-          {ingredient
-            .map((item, index) => (
-              measure[index]
-                ? (
-                  <li
-                    key={ item[0] }
-                    data-testid={ `data-testid=${index}-ingredient-step` }
-                  >
-                    {`${item[1]} ${measure[index][1]}`}
-                  </li>
-                ) : (
-                  <li
-                    key={ item[0] }
-                    data-testid={ `data-testid=${index}-ingredient-step` }
-                  >
-                    { item[1] }
-                  </li>
-                )
-            ))}
-        </ul>
+        <IngredientsProgress
+          ingredient={ ingredient }
+          measure={ measure }
+          onClick={ onClick }
+          done={ done }
+        />
         <p data-testid="instructions">{dataDetail[0].strInstructions}</p>
-        {history.url.includes('foods')
-        && (
-          <div />)}
         <div className="item-wrapper">
           <div
             className="items"

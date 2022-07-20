@@ -46,11 +46,18 @@ function Header() {
         hasSearch: false,
       });
       break;
-    default:
     case '/favorite-recipes':
       setHeaderState({
         ...headerState,
         title: 'Favorite Recipes',
+        hasSearch: false,
+      });
+      break;
+    default:
+    case '/foods/:id/in-progress':
+      setHeaderState({
+        ...headerState,
+        title: 'In Progress Recipe',
         hasSearch: false,
       });
       break;
