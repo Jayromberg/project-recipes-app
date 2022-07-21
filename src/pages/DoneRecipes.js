@@ -3,27 +3,27 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 
-const MOCKDONE = [{
-  id: '1234',
-  type: 'foods',
-  nationality: 'nacionalidade',
-  category: 'categoria-da-receita',
-  alcoholicOrNot: '',
-  name: 'Comida Massas',
-  image: 'httpss%3A%2F%2Fwww.remesM&djVAAAAAB0AAAAAEAc',
-  doneDate: 'feita em 30/10',
-  tags: ['facil', 'deliciosa', 'servem 4'],
-}, {
-  id: '5678',
-  type: 'drinks',
-  nationality: 'frança',
-  category: '',
-  alcoholicOrNot: 'alcoholic',
-  name: 'batida de vinho',
-  image: 'https://www.tudoreceitas.com/receita-de-batida-de-vinho-com-leite-condensado-9825.html',
-  doneDate: 'feita em junho',
-  tags: ['array-de-tags-da-receita', 'ou-array-vazio'],
-}];
+// const MOCKDONE = [{
+//   id: '1234',
+//   type: 'foods',
+//   nationality: 'nacionalidade',
+//   category: 'categoria-da-receita',
+//   alcoholicOrNot: '',
+//   name: 'Comida Massas',
+//   image: 'httpss%3A%2F%2Fwww.remesM&djVAAAAAB0AAAAAEAc',
+//   doneDate: 'feita em 30/10',
+//   tags: ['facil', 'deliciosa', 'servem 4'],
+// }, {
+//   id: '5678',
+//   type: 'drinks',
+//   nationality: 'frança',
+//   category: '',
+//   alcoholicOrNot: 'alcoholic',
+//   name: 'batida de vinho',
+//   image: 'https://www.tudoreceitas.com/receita-de-batida-de-vinho-com-leite-condensado-9825.html',
+//   doneDate: 'feita em junho',
+//   tags: ['array-de-tags-da-receita', 'ou-array-vazio'],
+// }];
 
 function DoneRecipes() {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));

@@ -8,7 +8,7 @@ import drinkCategories from '../../cypress/mocks/drinkCategories';
 import App from '../App';
 
 describe('testa a página de Progresso', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
       json: async () => {
         if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
@@ -22,7 +22,7 @@ describe('testa a página de Progresso', () => {
         }
       },
     }));
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/drinks');
   });
   afterEach(() => {

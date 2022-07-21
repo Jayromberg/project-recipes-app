@@ -4,15 +4,15 @@ import FavoriteButton from '../components/FavoriteButton';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 
-const MOCKfAVORITE = [{
-  id: 'id-da-receita',
-  type: 'food-ou-drink',
-  nationality: 'nacionalidade-da-receita-ou-texto-vazio',
-  category: 'categoria-da-receita-ou-texto-vazio',
-  alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
-  name: 'nome-da-receita',
-  image: 'imagem-da-receita',
-}];
+// const MOCKfAVORITE = [{
+//   id: 'id-da-receita',
+//   type: 'food-ou-drink',
+//   nationality: 'nacionalidade-da-receita-ou-texto-vazio',
+//   category: 'categoria-da-receita-ou-texto-vazio',
+//   alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
+//   name: 'nome-da-receita',
+//   image: 'imagem-da-receita',
+// }];
 
 function FavoriteRecipes() {
   // const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
