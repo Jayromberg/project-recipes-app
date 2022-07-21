@@ -20,12 +20,12 @@ function StartRecipeButton({ id }) {
     }
     if (inProgressRecipesLocal && pathname.includes('foods')) {
       const recipes = JSON.parse(inProgressRecipesLocal);
-      const keysFoods = Object.keys(recipes.meals);
+      const keysFoods = Object.keys(recipes);
       setIsInProgress(keysFoods.some((recipeID) => recipeID === id));
     }
     if (inProgressRecipesLocal && pathname.includes('drinks')) {
       const recipes = JSON.parse(inProgressRecipesLocal);
-      const keysDrinks = Object.keys(recipes.cocktails);
+      const keysDrinks = Object.keys(recipes);
       setIsInProgress(keysDrinks.some((recipeID) => recipeID === id));
     }
   }, [history.location, id, isInProgress]);
@@ -67,6 +67,7 @@ function StartRecipeButton({ id }) {
             className="start-recipe-btn"
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ redirect }
           >
             Continue Recipe
           </button>
