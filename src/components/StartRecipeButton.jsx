@@ -60,6 +60,7 @@ function StartRecipeButton({ id }) {
         && (
           <button
             style={ {
+              marginLeft: '600px',
               position: 'fixed',
               bottom: '0px',
             } }
