@@ -11,13 +11,20 @@ function DoneRecipes() {
   const [drink, setDrink] = useState(true);
   const [food, setFood] = useState(true);
 
-  const doneRecipesfromLocal = JSON.parse(localStorage.getItem('doneRecipes'));
+  const doneRecipesfromLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
 
   useEffect(() => {
     setDrink(true);
     setFood(true);
     setLocalState(true);
   }, []);
+
+  const filterTags = (favorite) => {
+    const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
+      .map((item) => (item.strTags.split(',')));
+    return tags[0];
+  };
 
   useEffect(() => {
     const createArray = () => {
@@ -31,7 +38,7 @@ function DoneRecipes() {
             alcoholicOrNot: item.alcoholicOrNot,
             name: item.name,
             image: item.image,
-            tags: item.tags ? item.tags.split(',') : [''],
+            tags: filterTags(item) || [],
           };
           return favoriteObj;
         }
