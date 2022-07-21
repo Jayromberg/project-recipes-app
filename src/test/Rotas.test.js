@@ -36,7 +36,9 @@ describe('testa as rotas dentro do componente App', () => {
     global.fetch.mockRestore();
   });
   it('testa se redireciona para a tela detalhada pelo filtro do header', async () => {
-    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    const { history } = await renderWithRouter(
+      <RecipesProvider><App /></RecipesProvider>,
+    );
     history.push('/drinks');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();
@@ -56,7 +58,7 @@ describe('testa as rotas dentro do componente App', () => {
   });
   it(`testa se ao clicar em uma receita ela redireciona 
   para a página de detalhes da receita`, async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/drinks');
     const drinlEl = await screen.findByText(/abc/i);
     expect(drinlEl).toBeInTheDocument();
@@ -66,7 +68,9 @@ describe('testa as rotas dentro do componente App', () => {
     });
   });
   it('testa o global Alert em Drinks', async () => {
-    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    const { history } = await renderWithRouter(
+      <RecipesProvider><App /></RecipesProvider>,
+    );
     history.push('/drinks');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();
@@ -110,7 +114,9 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
     global.fetch.mockRestore();
   });
   it('testa se redireciona para a tela detalhada pelo filtro do header', async () => {
-    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    const { history } = await renderWithRouter(
+      <RecipesProvider><App /></RecipesProvider>,
+    );
     history.push('/foods');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();
@@ -130,7 +136,7 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
   });
   it(`testa se ao clicar em uma receita ela redireciona 
     para a página de detalhes da receita`, async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const foodEl = await screen.findByText(/poutine/i);
     expect(foodEl).toBeInTheDocument();
@@ -141,7 +147,9 @@ describe('testa as rotas da página de comidas e bebidas para a tela de detalhe'
   });
 
   it('testa o global Alert em foods', async () => {
-    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    const { history } = await renderWithRouter(
+      <RecipesProvider><App /></RecipesProvider>,
+    );
     history.push('/foods');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();
@@ -181,7 +189,9 @@ describe('testa o segundo mock do global Alert', () => {
     global.fetch.mockRestore();
   });
   it('testa o global Alert com duas letras', async () => {
-    const { history } = renderWithRouter(<RecipesProvider><App /></RecipesProvider>);
+    const { history } = await renderWithRouter(
+      <RecipesProvider><App /></RecipesProvider>,
+    );
     history.push('/foods');
     const searchEl = await screen.findByRole('img', { name: /searchicon/i });
     expect(searchEl).toBeInTheDocument();

@@ -30,13 +30,13 @@ describe('Testes do componente Header', () => {
   // afterEach(() => {
   //   global.fetch.mockRestore();
   // });
-  test('Testa se o Header NÂO é renderizado na pagina App', () => {
-    renderWithRouter(<App />);
+  test('Testa se o Header NÂO é renderizado na pagina App', async () => {
+    await renderWithRouter(<App />);
     const title = screen.queryByTestId(PAGE_TITLE_ID);
     expect(title).not.toBeInTheDocument();
   });
   test('Testa se o Header é renderizado na pagina Foods', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.getByTestId(PROFILE_TOP_BTN_ID);
@@ -47,7 +47,7 @@ describe('Testes do componente Header', () => {
     expect(searchIcon).toBeInTheDocument();
   });
   test('Testa se o Header é renderizado na pagina Drinks', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/drinks');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.getByTestId(PROFILE_TOP_BTN_ID);
@@ -58,7 +58,7 @@ describe('Testes do componente Header', () => {
     expect(searchIcon).toBeInTheDocument();
   });
   test('Testa se o Header é renderizado na pagina Profile', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/profile');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.getByTestId(PROFILE_TOP_BTN_ID);
@@ -69,7 +69,7 @@ describe('Testes do componente Header', () => {
     expect(searchIcon).not.toBeInTheDocument();
   });
   test('Testa se o Header é renderizado na pagina Done Recipes', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/done-recipes');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.getByTestId(PROFILE_TOP_BTN_ID);
@@ -80,7 +80,7 @@ describe('Testes do componente Header', () => {
     expect(searchIcon).not.toBeInTheDocument();
   });
   test('Testa se o Header é renderizado na pagina Favorite Recipes', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/favorite-recipes');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.getByTestId(PROFILE_TOP_BTN_ID);
@@ -90,8 +90,8 @@ describe('Testes do componente Header', () => {
     expect(profileIcon).toBeInTheDocument();
     expect(searchIcon).not.toBeInTheDocument();
   });
-  test('Testa se o Header NÂO é renderizado na pagina inexistentes', () => {
-    const { history } = renderWithRouter(<App />);
+  test('Testa se o Header NÂO é renderizado na pagina inexistentes', async () => {
+    const { history } = await renderWithRouter(<App />);
     history.push('/xablau');
     const title = screen.queryByTestId(PAGE_TITLE_ID);
     const profileIcon = screen.queryByTestId(PROFILE_TOP_BTN_ID);
@@ -101,7 +101,7 @@ describe('Testes do componente Header', () => {
     expect(searchIcon).not.toBeInTheDocument();
   });
   test('Testa o input de pesquisa', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const title = await screen.findByTestId(PAGE_TITLE_ID);
     const searchIcon = screen.getByTestId(SEARCH_TOP_BTN_ID);

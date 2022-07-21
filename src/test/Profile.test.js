@@ -27,8 +27,8 @@ describe('testa o componente Profile', () => {
   afterEach(() => {
     global.fetch.mockRestore();
   });
-  it('testa se os componente aparecem na tela ', () => {
-    renderWithRouter(<Profile />);
+  it('testa se os componente aparecem na tela ', async () => {
+    await renderWithRouter(<Profile />);
     const profileIcon = screen.getByRole('img', { name: /profileicon/i });
     const doneRecipeButton = screen.getByRole('button', { name: /done recipes/i });
     const favoriteRecipeBtn = screen.getByRole('button', { name: /favorite recipes/i });
@@ -44,7 +44,7 @@ describe('testa o componente Profile', () => {
     expect(mealIcon).toBeInTheDocument();
   });
   it('testa se é possível redirecionar para a página foods', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Profile');
 
     const mealIcon = screen.getByRole('img', { name: /mealicon/i });
@@ -57,7 +57,7 @@ describe('testa o componente Profile', () => {
   });
 
   it('testa se é possível redirecionar para a página drinks', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Profile');
 
     const drinkicon = screen.getByRole('img', { name: /drinkicon/i });
@@ -69,7 +69,7 @@ describe('testa o componente Profile', () => {
     });
   });
   it('testa se é possível redirecionar para a página done Recipes', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Profile');
 
     const doneRecipeButton = screen.getByRole('button', { name: /done recipes/i });
@@ -81,7 +81,7 @@ describe('testa o componente Profile', () => {
     });
   });
   it('testa se é possível redirecionar para a página favorite Recipes', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Profile');
 
     const favoriteRecipeBtn = screen.getByRole('button', { name: /favorite recipes/i });
@@ -93,7 +93,7 @@ describe('testa o componente Profile', () => {
     });
   });
   it('testa se é possível redirecionar para a página logout', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Profile');
 
     const logoutBtn = screen.getByRole('button', { name: /logout/i });
@@ -109,7 +109,7 @@ describe('testa o componente Profile', () => {
     });
   });
   it('testa se o email do login aparece na tela', async () => {
-    renderWithRouter(<App />);
+    await renderWithRouter(<App />);
     const emailInputEl = screen.getByTestId('email-input');
     const passwordInputEl = screen.getByTestId('password-input');
     const enterBtnEl = screen.getByTestId('login-submit-btn');

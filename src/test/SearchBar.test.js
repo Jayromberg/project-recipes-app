@@ -52,7 +52,7 @@ describe('Testes do componente SearchBar', () => {
     global.fetch.mockRestore();
   });
   test('Testa se os inputs são visíveis ao acessar a uma pagina', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const searchButton = await screen.findByTestId(SEARCH_TOP_BTN_ID);
     const execSearch = screen.queryByTestId(EXEC_SEARCH_BTN_ID);
@@ -62,7 +62,7 @@ describe('Testes do componente SearchBar', () => {
     expect(screen.getByTestId(EXEC_SEARCH_BTN_ID)).toBeInTheDocument();
   });
   test('Testa a pesquisa do radio ingredient', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const searchButton = await screen.findByTestId(SEARCH_TOP_BTN_ID);
     userEvent.click(searchButton);
@@ -75,7 +75,7 @@ describe('Testes do componente SearchBar', () => {
     expect(await screen.findByText(/bubble & squeak/i)).toBeInTheDocument();
   });
   test('Testa a pesquisa do radio name', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const searchButton = await screen.findByTestId(SEARCH_TOP_BTN_ID);
     userEvent.click(searchButton);
@@ -88,7 +88,7 @@ describe('Testes do componente SearchBar', () => {
     expect(await screen.findByText(/corba/i)).toBeInTheDocument();
   });
   test('Testa a pesquisa do radio first letter', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const searchButton = await screen.findByTestId(SEARCH_TOP_BTN_ID);
     userEvent.click(searchButton);

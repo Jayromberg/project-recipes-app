@@ -9,7 +9,7 @@ import App from '../App';
 import cocktailDrinks from '../../cypress/mocks/cocktailDrinks';
 
 describe('testa o componente Recipes na página Drinks', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
       json: async () => {
         if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
@@ -26,7 +26,7 @@ describe('testa o componente Recipes na página Drinks', () => {
         }
       },
     }));
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/drinks');
   });
   afterEach(() => {

@@ -5,14 +5,14 @@ import renderWithRouter from './renderWithRouter';
 import App from '../App';
 
 describe('Teste do componente Footer', () => {
-  it('testa se o componente Footer não aparece na página de Login', () => {
-    renderWithRouter(<App />);
+  it('testa se o componente Footer não aparece na página de Login', async () => {
+    await renderWithRouter(<App />);
     const Footer = screen.queryByTestId('footer');
     expect(Footer).not.toBeInTheDocument();
   });
 
   it('testa se há um footer na página principal das receitas', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
     const Footer = screen.queryByTestId('footer');
     expect(Footer).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('Teste do componente Footer', () => {
   });
 
   it('testa se há um footer na página principal das receitas', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/Drinks');
     const Footer = screen.queryByTestId('footer');
     expect(Footer).toBeInTheDocument();

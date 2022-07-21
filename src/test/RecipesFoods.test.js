@@ -9,7 +9,7 @@ import App from '../App';
 import dessertMeals from '../../cypress/mocks/dessertMeals';
 
 describe('testa o componente Recipes na página Foods', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
       json: async () => {
         if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
@@ -26,7 +26,7 @@ describe('testa o componente Recipes na página Foods', () => {
         }
       },
     }));
-    const { history } = renderWithRouter(<App />);
+    const { history } = await renderWithRouter(<App />);
     history.push('/foods');
   });
   afterEach(() => {
@@ -63,10 +63,9 @@ describe('testa o componente Recipes na página Foods', () => {
 
   it(`testa se é possível selecionar uma categoria e se o botão All 
   retorna desta categoria`, async () => {
+    const catBtnEl01 = await screen.findByRole('button', { name: /beef/i });
     const corbaEl = screen.queryByRole('img', { name: /corba/i });
     expect(corbaEl).toBeInTheDocument();
-
-    const catBtnEl01 = await screen.findByRole('button', { name: /beef/i });
     userEvent.click(catBtnEl01);
 
     await waitFor(() => {
@@ -87,9 +86,9 @@ describe('testa o componente Recipes na página Foods', () => {
     });
   });
   it('testa o toggle das categorias', async () => {
+    const catBtnEl04 = await screen.findByRole('button', { name: /dessert/i });
     const corbaEl = screen.queryByRole('img', { name: /corba/i });
     expect(corbaEl).toBeInTheDocument();
-    const catBtnEl04 = await screen.findByRole('button', { name: /dessert/i });
 
     userEvent.click(catBtnEl04);
 

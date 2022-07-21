@@ -5,8 +5,8 @@ import renderWithRouter from './renderWithRouter';
 import App from '../App';
 
 describe('testa a página login', () => {
-  beforeEach(() => {
-    renderWithRouter(<App />);
+  beforeEach(async () => {
+    await renderWithRouter(<App />);
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
       json: async () => {
         if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
