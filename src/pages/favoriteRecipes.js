@@ -149,7 +149,6 @@ function FavoriteRecipes() {
                       key={ elem }
                     >
                       {elem}
-                      {', '}
 
                     </p>)
                 ))}
