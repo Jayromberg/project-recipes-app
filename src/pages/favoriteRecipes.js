@@ -83,10 +83,7 @@ function FavoriteRecipes() {
         if (food) {
           return recipe.type === 'food';
         }
-        if (drink) {
-          return recipe.type === 'drink';
-        }
-        return recipe;
+        return recipe.type === 'drink';
       });
       setFavoriteRecipes(filters);
     }

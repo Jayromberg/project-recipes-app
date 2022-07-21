@@ -12,22 +12,50 @@ function DoneRecipes() {
   const [food, setFood] = useState(true);
 
   const doneRecipesfromLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
+  // const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
 
   useEffect(() => {
+    // const doneRecipes1 = [
+    //   {
+    //     id: '52771',
+    //     type: 'food',
+    //     nationality: 'Italian',
+    //     category: 'Vegetarian',
+    //     alcoholicOrNot: '',
+    //     name: 'Spicy Arrabiata Penne',
+    //     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+    //     doneDate: '23/06/2020',
+    //     tags: ['Pasta', 'Curry'],
+    //   },
+    //   {
+    //     id: '178319',
+    //     type: 'drink',
+    //     nationality: '',
+    //     category: 'Cocktail',
+    //     alcoholicOrNot: 'Alcoholic',
+    //     name: 'Aquamarine',
+    //     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+    //     doneDate: '23/06/2020',
+    //     tags: [],
+    //   },
+    // ];
+
+    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes1));
+
     setDrink(true);
     setFood(true);
     setLocalState(true);
   }, []);
 
-  const filterTags = (favorite) => {
-    const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
-      .map((item) => (item.strTags.split(',')));
-    return tags[0];
-  };
+  // const filterTags = (favorite) => {
+  //   const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
+  //     .map((item) => (item.strTags.split(',')));
+  //   return tags[0];
+  // };
 
   useEffect(() => {
     const createArray = () => {
+      // console.log(doneRecipesfromLocal);
       const addTagArray = doneRecipesfromLocal && doneRecipesfromLocal.map((item) => {
         if (item.type === 'food') {
           const favoriteObj = {
@@ -37,8 +65,9 @@ function DoneRecipes() {
             category: item.category,
             alcoholicOrNot: item.alcoholicOrNot,
             name: item.name,
+            doneDate: item.doneDate,
             image: item.image,
-            tags: filterTags(item) || [],
+            tags: item.tags, // filterTags(item) || [],
           };
           return favoriteObj;
         }
@@ -50,6 +79,7 @@ function DoneRecipes() {
           category: item.category,
           name: item.name,
           image: item.image,
+          doneDate: item.doneDate,
         };
         return favoriteObj;
       });
@@ -119,6 +149,7 @@ function DoneRecipes() {
           Drinks
 
         </button>
+        {console.log(doneRecipes)}
         { doneRecipes && doneRecipes.map((item, index) => (
           item.type === 'food'
             ? (
@@ -140,7 +171,7 @@ function DoneRecipes() {
 
                 </p>
                 <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-                {item.tags.map((elem, idx) => (
+                {item.tags.length && item.tags.map((elem, idx) => (
                   idx < 2 && (
                     <p
                       data-testid={ `${index}-${elem}-horizontal-tag` }
