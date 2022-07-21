@@ -13,8 +13,8 @@ function ShareButton({ index, type, id }) {
     const { pathname } = history.location;
     if (type) {
       setWasCopied(true);
-      console.log(`http://localhost:3000/${type}/${id}`);
-      copy(`http://localhost:3000/${type}/${id}`);
+      console.log(`http://localhost:3000/${type}s/${id}`);
+      copy(`http://localhost:3000/${type}s/${id}`);
     }
     setWasCopied(true);
     copy(`http://localhost:3000${pathname}`);
@@ -22,15 +22,15 @@ function ShareButton({ index, type, id }) {
 
   return (
     <div>
-      { index ? (
+      { type ? (
         <button
           type="button"
           onClick={ copyLink }
         >
           <img
+            data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             alt="Share Button"
-            data-testid={ `${index}-horizontal-share-btn` }
           />
         </button>
       ) : (

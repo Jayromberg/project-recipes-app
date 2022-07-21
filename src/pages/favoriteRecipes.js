@@ -3,46 +3,88 @@ import { Link } from 'react-router-dom';
 import FavoriteButton from '../components/FavoriteButton';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
-
-// const MOCKfAVORITE = [{
-//   id: 'id-da-receita',
-//   type: 'food-ou-drink',
-//   nationality: 'nacionalidade-da-receita-ou-texto-vazio',
-//   category: 'categoria-da-receita-ou-texto-vazio',
-//   alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
-//   name: 'nome-da-receita',
-//   image: 'imagem-da-receita',
-// }];
+import '../components/ImageSize.css';
 
 function FavoriteRecipes() {
-  // const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  //  const favoriteRecipes = MOCKfAVORITE;
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const [drink, setDrink] = useState(false);
-  const [food, setFood] = useState(false);
-  const [all, setAll] = useState(true);
+  const [data, setData] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  const [localState, setLocalState] = useState(false);
+  const favoritefromLocal = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  const [drink, setDrink] = useState(true);
+  const [food, setFood] = useState(true);
 
   useEffect(() => {
-    setDrink(false);
-    setFood(false);
-    setAll(true);
+    setDrink(true);
+    setFood(true);
+    setLocalState(true);
   }, []);
 
+  useEffect(() => {
+    const createArray = () => {
+      const addTagArray = favoritefromLocal && favoritefromLocal.map((item) => {
+        if (item.type === 'food') {
+          const favoriteObj = {
+            id: item.id,
+            type: item.type,
+            nationality: item.nationality,
+            category: item.category,
+            alcoholicOrNot: item.alcoholicOrNot,
+            name: item.name,
+            image: item.image,
+            tags: item.tags ? item.tags.split(',') : [''],
+          };
+          return favoriteObj;
+        }
+        const favoriteObj = {
+          id: item.id,
+          type: item.type,
+          nationality: item.nationality,
+          alcoholicOrNot: item.alcoholicOrNot,
+          category: item.category,
+          name: item.name,
+          image: item.image,
+        };
+        return favoriteObj;
+      });
+      setFavoriteRecipes(addTagArray);
+      setData(addTagArray);
+    };
+    createArray();
+  }, [localState]);
+
   const selectAll = () => {
-    setAll(true);
-    setDrink(false);
-    setFood(false);
+    setDrink(true);
+    setFood(true);
   };
   const filterFood = () => {
     setFood(true);
-    setAll(false);
     setDrink(false);
   };
   const filterDrinks = () => {
-    setAll(false);
     setDrink(true);
     setFood(false);
   };
+
+  useEffect(() => {
+    if (data) {
+      const filters = data.filter((recipe) => {
+        if (food && drink) {
+          return recipe;
+        }
+        if (food) {
+          return recipe.type === 'food';
+        }
+        if (drink) {
+          return recipe.type === 'drink';
+        }
+        return recipe;
+      });
+      setFavoriteRecipes(filters);
+    }
+  }, [drink, food]);
+
   return (
     <div>
       <Header />
@@ -72,54 +114,70 @@ function FavoriteRecipes() {
           Drinks
 
         </button>
-        { (all || food) && (favoriteRecipes.map((item, index) => (item
-          .type === 'foods'
-          && (
-            <div key={ item.id }>
-              <Link to={ `/foods/${item.id}` }>
-                <img
-                  data-testid={ `${index}-horizontal-image` }
-                  src={ item.image }
-                  alt={ item.name }
-                />
-                <p data-testid={ `${index}-horizontal-name` }>{item.name}</p>
-              </Link>
-              <p data-testid={ `${index}-horizontal-top-text` }>{item.category}</p>
-              <p>{item.nationality}</p>
-              <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-              {item.tags.map((elem, idx) => (
-                idx < 2 && (
-                  <p
-                    data-testid={ `${index}-${elem}-horizontal-tag` }
-                    key={ elem }
-                  >
-                    {elem}
+        { favoriteRecipes && favoriteRecipes.map((item, index) => (
+          item.type === 'food'
+            ? (
+              <div key={ item.id }>
+                <Link
+                  to={ `/foods/${item.id}` }
+                >
+                  <img
+                    data-testid={ `${index}-horizontal-image` }
+                    src={ item.image }
+                    alt={ item.name }
+                  />
+                  <p data-testid={ `${index}-horizontal-name` }>{item.name}</p>
+                </Link>
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  {`${item.nationality} - ${item.category} `}
 
-                  </p>)
-              ))}
-              <ShareButton index={ index } id={ item.id } type={ item.type } />
-              <FavoriteButton id={ item.id } />
-            </div>
-          ))))}
-        { (all || drink) && (favoriteRecipes.map((item, index) => (item
-          .type === 'drinks'
-          && (
-            <div key={ item.id }>
-              <Link to={ `/drinks/${item.id}` }>
-                <img
-                  data-testid={ `${index}-horizontal-image` }
-                  src={ item.image }
-                  alt={ item.name }
+                </p>
+                <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
+                {item.tags.map((elem, idx) => (
+                  idx < 2 && (
+                    <p
+                      data-testid={ `${index}-${elem}-horizontal-tag` }
+                      key={ elem }
+                    >
+                      {elem}
+
+                    </p>)
+                ))}
+                <ShareButton index={ index } id={ item.id } type={ item.type } />
+                <FavoriteButton
+                  id={ item.id }
+                  setLocalState={ setLocalState }
+                  localState={ localState }
+                  index={ index }
+                  isfavorite
                 />
-                <p data-testid={ `${index}-horizontal-name` }>{item.name}</p>
-              </Link>
-              <p>{item.alcoholicOrNot}</p>
-              <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-              <ShareButton index={ index } id={ item.id } type={ item.type } />
-              <FavoriteButton id={ item.id } />
-            </div>
-          )))
-        )}
+              </div>
+            ) : (
+              <div key={ item.id }>
+                <Link to={ `/drinks/${item.id}` }>
+                  <img
+                    data-testid={ `${index}-horizontal-image` }
+                    src={ item.image }
+                    alt={ item.name }
+                  />
+                  <p data-testid={ `${index}-horizontal-name` }>{item.name}</p>
+                </Link>
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  {`${item.alcoholicOrNot} - ${item.category}`}
+
+                </p>
+                <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
+                <ShareButton index={ index } id={ item.id } type={ item.type } />
+                <FavoriteButton
+                  id={ item.id }
+                  index={ index }
+                  setLocalState={ setLocalState }
+                  localState={ localState }
+                  isfavorite
+                />
+              </div>)))}
       </section>
     </div>
   );
