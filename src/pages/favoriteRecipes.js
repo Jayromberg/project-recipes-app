@@ -75,21 +75,18 @@ function FavoriteRecipes() {
   };
 
   useEffect(() => {
-    if (data) {
-      const filters = data.filter((recipe) => {
-        if (food && drink) {
-          return recipe;
-        }
-        if (food) {
-          return recipe.type === 'food';
-        }
-        if (drink) {
-          return recipe.type === 'drink';
-        }
+    // if (data) {
+    const filters = data.filter((recipe) => {
+      if (food && drink) {
         return recipe;
-      });
-      setFavoriteRecipes(filters);
-    }
+      }
+      if (food) {
+        return recipe.type === 'food';
+      }
+      return recipe.type === 'drink';
+    });
+    setFavoriteRecipes(filters);
+    // }
   }, [drink, food]);
 
   return (
@@ -149,7 +146,6 @@ function FavoriteRecipes() {
                       key={ elem }
                     >
                       {elem}
-                      {', '}
 
                     </p>)
                 ))}

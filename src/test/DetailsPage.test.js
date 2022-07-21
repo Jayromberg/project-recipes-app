@@ -7,7 +7,6 @@ import meals from '../../cypress/mocks/meals';
 import acbDrinkData from './acbMock';
 import drinkCategories from '../../cypress/mocks/drinkCategories';
 import App from '../App';
-// import RecipeDetails, { drinkRecipes } from '../components/RecipeDetails';
 
 describe('testa a página de detalhes', () => {
   beforeEach(async () => {
@@ -47,15 +46,6 @@ describe('testa a página de detalhes', () => {
     expect(ingredient02).toBeInTheDocument();
     expect(ingredient03).toBeInTheDocument();
     expect(recipe).toBeInTheDocument();
-
-    // const allCards = await screen.findAllByLabelText(/items/i);
-    // expect(allCards).toHaveLength(5);
-
-    // const corbaRecomendation = await screen.findByText('corba');
-    // const BurekRecomendation = await screen.findByText('burek');
-
-    // expect(corbaRecomendation).toBeInTheDocument();
-    // expect(BurekRecomendation).toBeInTheDocument();
   });
   it('testa o card de recomendações', async () => {
     const drinkEl = await screen.findByText(/abc/i);
@@ -73,12 +63,26 @@ describe('testa a página de detalhes', () => {
     expect(recomedantion3).toBeInTheDocument();
     expect(recomedantion4).toBeInTheDocument();
     expect(recomedantion5).toBeInTheDocument();
+  });
+  it('testa se é possível favoritar uma receita', async () => {
+    const local = {
+      alcoholicOrNot: 'Alcoholic',
+      category: 'Shot',
+      id: '13501',
+      image: 'https://www.thecocktaildb.com/images/media/drink/tqpvqp1472668328.jpg',
+      name: 'ABC',
+      nationality: '',
+      type: 'drink',
+    };
+    localStorage.setItem('favoriteRecipes', JSON.stringify([local]));
+    const { history } = await renderWithRouter(<App />);
 
-    // const card = document.createElement('div');
-    // card.scrollBy = jest.fn();
-    // const myState = drinkRecipes = { scrollRef: { current: card } };
-    // const wrapper = shallow(<RecipeDetails />);
-    // wrapper.setState(myState);
-    // expect(card.scrollBy).toBeCalledWith(-5, 0);
+    history.push('/drinks/13501');
+
+    const favBtn2 = await screen.findByTestId('favorite-btn');
+    userEvent.click(favBtn2);
+    const getlocal = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    expect(getlocal).toEqual([]);
   });
 });
