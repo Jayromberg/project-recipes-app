@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-function FavoriteButton({ dataDetail }) {
+function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
+  isfavorite }) {
   const history = useHistory();
   const [isBlackHeart, setIsBlackHeart] = useState(false);
 
@@ -18,6 +19,9 @@ function FavoriteButton({ dataDetail }) {
     if (favoriteRecipesLocal && pathname.includes('drinks')) {
       const favoriteList = JSON.parse(favoriteRecipesLocal);
       setIsBlackHeart(favoriteList.some((recipe) => recipe.id === dataDetail[0].idDrink));
+    }
+    if (favoriteRecipesLocal && pathname.includes('favorite-recipes')) {
+      setIsBlackHeart(true);
     }
   }, [dataDetail, history.location]);
 
@@ -35,6 +39,7 @@ function FavoriteButton({ dataDetail }) {
         alcoholicOrNot: '',
         name: dataDetail[0].strMeal,
         image: dataDetail[0].strMealThumb,
+        tags: dataDetail[0].strTags,
       };
     } else {
       favoriteObj = {
@@ -67,10 +72,15 @@ function FavoriteButton({ dataDetail }) {
       const newFavoriteList = favoriteList
         .filter((recipe) => recipe.id !== dataDetail[0].idMeal);
       localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteList));
-    } else {
+    } else if (pathname.includes('drinks')) {
       const newFavoriteList = favoriteList
         .filter((recipe) => recipe.id !== dataDetail[0].idDrink);
       localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteList));
+    } else {
+      const newFavoriteList = favoriteList
+        .filter((recipe) => recipe.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteList));
+      setLocalState(!localState);
     }
 
     setIsBlackHeart(false);
@@ -84,7 +94,9 @@ function FavoriteButton({ dataDetail }) {
           onClick={ removeFavorite }
         >
           <img
-            data-testid="favorite-btn"
+            data-testid={ isfavorite ? `${index}-horizontal-favorite-btn`
+              : 'favorite-btn' }
+            // data-testid="favorite-btn"
             src={ blackHeartIcon }
             alt="blackHeartIcon"
           />
@@ -95,7 +107,8 @@ function FavoriteButton({ dataDetail }) {
           onClick={ saveFavorite }
         >
           <img
-            data-testid="favorite-btn"
+            data-testid={ isfavorite ? `${index}-horizontal-favorite-btn`
+              : 'favorite-btn' }
             src={ whiteHeartIcon }
             alt="whiteHeartIcon"
           />
@@ -105,8 +118,22 @@ function FavoriteButton({ dataDetail }) {
   );
 }
 
+FavoriteButton.defaultProps = {
+  dataDetail: [],
+  id: '',
+  setLocalState: () => {},
+  localState: false,
+  index: null,
+  isfavorite: false,
+};
+
 FavoriteButton.propTypes = {
-  dataDetail: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dataDetail: PropTypes.arrayOf(PropTypes.object),
+  id: PropTypes.string,
+  setLocalState: PropTypes.func,
+  localState: PropTypes.bool,
+  index: PropTypes.number,
+  isfavorite: PropTypes.bool,
 };
 
 export default FavoriteButton;
