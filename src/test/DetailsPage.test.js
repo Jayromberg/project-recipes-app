@@ -7,7 +7,6 @@ import meals from '../../cypress/mocks/meals';
 import acbDrinkData from './acbMock';
 import drinkCategories from '../../cypress/mocks/drinkCategories';
 import App from '../App';
-// import RecipeDetails, { drinkRecipes } from '../components/RecipeDetails';
 
 describe('testa a página de detalhes', () => {
   beforeEach(async () => {

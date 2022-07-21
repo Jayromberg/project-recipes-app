@@ -8,7 +8,7 @@ import poutineData from './poutineMock';
 import meals from '../../cypress/mocks/meals';
 import App from '../App';
 
-describe('testa o componente de receitas Favoritas', () => {
+describe('testa a página de receitas Prontas', () => {
   beforeEach(async () => {
     jest.spyOn(global, 'fetch').mockImplementation(async (url) => ({
       json: async () => {
@@ -26,36 +26,41 @@ describe('testa o componente de receitas Favoritas', () => {
         }
       },
     }));
-    const { history } = await renderWithRouter(<App />);
-    history.push('/favorite-recipes');
   });
   afterEach(() => {
     global.fetch.mockRestore();
   });
+  it('testa se os elementos aparecem na tela', async () => {
+    const doneRecipes = [
+      {
+        id: '52804',
+        type: 'food',
+        nationality: 'Canadian',
+        category: 'Miscellaneous',
+        alcoholicOrNot: '',
+        name: 'Poutine',
+        image: 'https://www.themealdb.com/images/media/meals/uuyrrx1487327597.jpg',
+        doneDate: '23/06/2020',
+        tags: ['UnHealthy', 'Speciality', 'HangoverFood'],
+      },
+      {
+        id: '13501',
+        type: 'drink',
+        nationality: '',
+        category: 'Shot',
+        alcoholicOrNot: 'Alcoholic',
+        name: 'ABC',
+        image: 'https://www.thecocktaildb.com/images/media/drink/tqpvqp1472668328.jpg',
+        doneDate: '21/06/2020',
+        tags: [],
+      },
+    ];
 
-  it('testa se é possível favoritar uma bebiba e uma comida', async () => {
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+
     const { history } = await renderWithRouter(<App />);
-    history.push('/foods');
+    history.push('/done-recipes');
 
-    const foodEl = await screen.findByText(/poutine/i);
-    expect(foodEl).toBeInTheDocument();
-    userEvent.click(foodEl);
-
-    const poutine = await screen.findByText(/poutine/i);
-    expect(poutine).toBeInTheDocument();
-
-    const ShareButton = await screen.findByRole('img', { name: /whitehearticon/i });
-    userEvent.click(ShareButton);
-
-    history.push('/drinks');
-
-    const drinlEl = await screen.findByText(/abc/i);
-    userEvent.click(drinlEl);
-
-    const ShareDrinkBtn = await screen.findByTestId('favorite-btn');
-    userEvent.click(ShareDrinkBtn);
-
-    history.push('/favorite-recipes');
     const favFood = await screen.findByText(/poutine/i);
     const nationalityItem = await screen.findByText(/canadian - miscellaneous/i);
     const foodTag = await screen.findByText(/unhealthy/i);
@@ -70,8 +75,10 @@ describe('testa o componente de receitas Favoritas', () => {
     expect(favDrink).toBeInTheDocument();
     expect(drinkTag).toBeInTheDocument();
   });
+  it('testa os filtros da página de receitas feitas', async () => {
+    const { history } = await renderWithRouter(<App />);
+    history.push('/done-recipes');
 
-  it('testa os filtros da página de favoritos', async () => {
     const favFood = await screen.findByText(/poutine/i);
     const favDrink = await screen.findByText(/abc/i);
     expect(favDrink).toBeInTheDocument();
@@ -97,29 +104,6 @@ describe('testa o componente de receitas Favoritas', () => {
     await waitFor(() => {
       expect(screen.queryByText(/poutine/i)).toBeInTheDocument();
       expect(screen.queryByText(/abc/i)).toBeInTheDocument();
-    });
-  });
-
-  it('testa se é possível desfavoritar a receita', async () => {
-    const favFood = await screen.findByText(/poutine/i);
-    const favDrink = await screen.findByText(/abc/i);
-    expect(favDrink).toBeInTheDocument();
-    expect(favFood).toBeInTheDocument();
-
-    const favFoodBtn = await screen.findByTestId('0-horizontal-favorite-btn');
-    userEvent.click(favFoodBtn);
-
-    await waitFor(() => {
-      expect(screen.queryByText(/poutine/i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/abc/i)).toBeInTheDocument();
-    });
-
-    const favDrinkBtn = await screen.findByTestId('0-horizontal-favorite-btn');
-    userEvent.click(favDrinkBtn);
-
-    await waitFor(() => {
-      expect(screen.queryByText(/poutine/i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/abc/i)).not.toBeInTheDocument();
     });
   });
 });
