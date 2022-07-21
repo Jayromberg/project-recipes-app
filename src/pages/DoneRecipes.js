@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 import '../components/ImageSize.css';
 
-
 function DoneRecipes() {
   const [doneRecipes, setdoneRecipes] = useState([]);
   const [data, setData] = useState([]);
@@ -22,7 +21,7 @@ function DoneRecipes() {
 
   useEffect(() => {
     const createArray = () => {
-      const addTagArray = doneRecipesfromLocal.map((item) => {
+      const addTagArray = doneRecipesfromLocal && doneRecipesfromLocal.map((item) => {
         if (item.type === 'food') {
           const favoriteObj = {
             id: item.id,

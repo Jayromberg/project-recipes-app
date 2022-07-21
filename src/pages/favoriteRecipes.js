@@ -23,7 +23,7 @@ function FavoriteRecipes() {
 
   useEffect(() => {
     const createArray = () => {
-      const addTagArray = favoritefromLocal.map((item) => {
+      const addTagArray = favoritefromLocal && favoritefromLocal.map((item) => {
         if (item.type === 'food') {
           const favoriteObj = {
             id: item.id,
