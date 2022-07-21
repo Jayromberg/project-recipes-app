@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import DetailContext from '../context/DetailContext';
 
 function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
   isfavorite }) {
   const history = useHistory();
   const [isBlackHeart, setIsBlackHeart] = useState(false);
+  const { allDatas } = useContext(DetailContext);
 
   useEffect(() => {
     const { pathname } = history.location;
@@ -27,6 +29,7 @@ function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
 
   function saveFavorite() {
     const { pathname } = history.location;
+    localStorage.setItem('allDatas', JSON.stringify(allDatas));
 
     const favoriteRecipesLocal = localStorage.getItem('favoriteRecipes');
     let favoriteObj = null;
@@ -39,7 +42,6 @@ function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
         alcoholicOrNot: '',
         name: dataDetail[0].strMeal,
         image: dataDetail[0].strMealThumb,
-        tags: dataDetail[0].strTags,
       };
     } else {
       favoriteObj = {

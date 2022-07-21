@@ -10,7 +10,8 @@ function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const [localState, setLocalState] = useState(false);
-  const favoritefromLocal = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const favoritefromLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
 
   const [drink, setDrink] = useState(true);
   const [food, setFood] = useState(true);
@@ -20,6 +21,12 @@ function FavoriteRecipes() {
     setFood(true);
     setLocalState(true);
   }, []);
+
+  const filterTags = (favorite) => {
+    const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
+      .map((item) => (item.strTags.split(',')));
+    return tags[0];
+  };
 
   useEffect(() => {
     const createArray = () => {
@@ -33,7 +40,7 @@ function FavoriteRecipes() {
             alcoholicOrNot: item.alcoholicOrNot,
             name: item.name,
             image: item.image,
-            tags: item.tags ? item.tags.split(',') : [''],
+            tags: filterTags(item) || [],
           };
           return favoriteObj;
         }
@@ -142,6 +149,7 @@ function FavoriteRecipes() {
                       key={ elem }
                     >
                       {elem}
+                      {', '}
 
                     </p>)
                 ))}

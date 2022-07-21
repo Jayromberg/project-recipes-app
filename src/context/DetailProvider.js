@@ -4,12 +4,14 @@ import DetailContext from './DetailContext';
 
 function DetailProvider({ children }) {
   const [dataDetail, setDataDetail] = useState([]);
+  const [allDatas, setAllDatas] = useState([]);
 
   const fetchDetailFoods = async (id) => {
     const resolve = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const data = await resolve.json();
     if (data) {
       setDataDetail(data.meals);
+      setAllDatas((prev) => ([...prev, data.meals[0]]));
     }
   };
 
@@ -25,6 +27,7 @@ function DetailProvider({ children }) {
     dataDetail,
     fetchDetailFoods,
     fetchDetailDrinks,
+    allDatas,
   };
 
   return (
