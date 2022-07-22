@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 import '../components/ImageSize.css';
 
 function DoneRecipes() {
-  const [doneRecipes, setdoneRecipes] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
   const [data, setData] = useState([]);
   const [localState, setLocalState] = useState(false);
   const [drink, setDrink] = useState(true);
   const [food, setFood] = useState(true);
-
-  const doneRecipesfromLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
 
   useEffect(() => {
     setDrink(true);
@@ -19,40 +17,43 @@ function DoneRecipes() {
     setLocalState(true);
   }, []);
 
-  useEffect(() => {
-    const createArray = () => {
-      const addTagArray = doneRecipesfromLocal && doneRecipesfromLocal.map((item) => {
-        if (item.type === 'food') {
-          const favoriteObj = {
-            id: item.id,
-            type: item.type,
-            nationality: item.nationality,
-            category: item.category,
-            alcoholicOrNot: item.alcoholicOrNot,
-            name: item.name,
-            doneDate: item.doneDate,
-            image: item.image,
-            tags: item.tags,
-          };
-          return favoriteObj;
-        }
+  const createArray = useCallback((localStorageData) => {
+    const addTagArray = localStorageData && localStorageData.map((item) => {
+      if (item.type === 'food') {
         const favoriteObj = {
           id: item.id,
           type: item.type,
           nationality: item.nationality,
-          alcoholicOrNot: item.alcoholicOrNot,
           category: item.category,
+          alcoholicOrNot: item.alcoholicOrNot,
           name: item.name,
-          image: item.image,
           doneDate: item.doneDate,
+          image: item.image,
+          tags: item.tags,
         };
         return favoriteObj;
-      });
-      setdoneRecipes(addTagArray);
-      setData(addTagArray);
-    };
-    createArray();
-  }, [localState]);
+      }
+      const favoriteObj = {
+        id: item.id,
+        type: item.type,
+        nationality: item.nationality,
+        alcoholicOrNot: item.alcoholicOrNot,
+        category: item.category,
+        name: item.name,
+        image: item.image,
+        doneDate: item.doneDate,
+      };
+      return favoriteObj;
+    });
+    return addTagArray;
+  }, []);
+
+  useEffect(() => {
+    const doneRecipesFromLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const newState = createArray(doneRecipesFromLocal);
+    setDoneRecipes(newState);
+    setData(newState);
+  }, [createArray, localState]);
 
   const selectAll = () => {
     setDrink(true);
@@ -67,18 +68,25 @@ function DoneRecipes() {
     setFood(false);
   };
 
-  useEffect(() => {
-    const filters = data.filter((recipe) => {
-      if (food && drink) {
-        return recipe;
-      }
-      if (food) {
-        return recipe.type === 'food';
-      }
-      return recipe.type === 'drink';
-    });
-    setdoneRecipes(filters);
+  const filterData = useCallback((info) => {
+    if (info) {
+      const filters = info.filter((recipe) => {
+        if (food && drink) {
+          return recipe;
+        }
+        if (food) {
+          return recipe.type === 'food';
+        }
+        return recipe.type === 'drink';
+      });
+      return filters;
+    }
   }, [drink, food]);
+
+  useEffect(() => {
+    const infoData = filterData(data);
+    setDoneRecipes(infoData);
+  }, [data, filterData]);
 
   return (
     <div>
