@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -16,57 +16,57 @@ const INICIAL_STATE_HEADER = {
 function Header() {
   const [headerState, setHeaderState] = useState(INICIAL_STATE_HEADER);
   const history = useHistory();
+  const { pathname } = history.location;
 
-  function isElementVisible() {
-    const { pathname } = history.location;
-    switch (pathname) {
+  const isElementVisible = useCallback((router) => {
+    switch (router) {
     case '/foods':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'Foods',
-      });
+      }));
       break;
     case '/drinks':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'Drinks',
-      });
+      }));
       break;
     case '/profile':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'Profile',
         hasSearch: false,
-      });
+      }));
       break;
     case '/done-recipes':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'Done Recipes',
         hasSearch: false,
-      });
+      }));
       break;
     case '/favorite-recipes':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'Favorite Recipes',
         hasSearch: false,
-      });
+      }));
       break;
     default:
     case '/foods/:id/in-progress':
-      setHeaderState({
-        ...headerState,
+      setHeaderState((oldHeaderState) => ({
+        ...oldHeaderState,
         title: 'In Progress Recipe',
         hasSearch: false,
-      });
+      }));
       break;
     }
-  }
+  }, []);
 
   useEffect(() => {
-    isElementVisible();
-  }, []);
+    isElementVisible(pathname);
+  }, [isElementVisible, pathname]);
 
   return (
     <section>
