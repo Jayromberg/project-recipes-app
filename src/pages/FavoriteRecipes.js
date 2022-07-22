@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../components/FavoriteButton';
 import Header from '../components/Header';
@@ -8,10 +8,7 @@ import '../components/ImageSize.css';
 function FavoriteRecipes() {
   const [data, setData] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-
   const [localState, setLocalState] = useState(false);
-  const favoritefromLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
 
   const [drink, setDrink] = useState(true);
   const [food, setFood] = useState(true);
@@ -22,44 +19,49 @@ function FavoriteRecipes() {
     setLocalState(true);
   }, []);
 
-  const filterTags = (favorite) => {
-    const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
-      .map((item) => (item.strTags.split(',')));
-    return tags[0];
-  };
+  const createArray = useCallback((localStorageData) => {
+    const dataFromLocal = JSON.parse(localStorage.getItem('allDatas')) || [];
 
-  useEffect(() => {
-    const createArray = () => {
-      const addTagArray = favoritefromLocal && favoritefromLocal.map((item) => {
-        if (item.type === 'food') {
-          const favoriteObj = {
-            id: item.id,
-            type: item.type,
-            nationality: item.nationality,
-            category: item.category,
-            alcoholicOrNot: item.alcoholicOrNot,
-            name: item.name,
-            image: item.image,
-            tags: filterTags(item) || [],
-          };
-          return favoriteObj;
-        }
+    const filterTags = (favorite) => {
+      const tags = dataFromLocal.filter((elem) => (elem.idMeal === favorite.id))
+        .map((item) => (item.strTags.split(',')));
+      return tags[0];
+    };
+
+    const addTagArray = localStorageData && localStorageData.map((item) => {
+      if (item.type === 'food') {
         const favoriteObj = {
           id: item.id,
           type: item.type,
           nationality: item.nationality,
-          alcoholicOrNot: item.alcoholicOrNot,
           category: item.category,
+          alcoholicOrNot: item.alcoholicOrNot,
           name: item.name,
           image: item.image,
+          tags: filterTags(item) || [],
         };
         return favoriteObj;
-      });
-      setFavoriteRecipes(addTagArray);
-      setData(addTagArray);
-    };
-    createArray();
-  }, [localState]);
+      }
+      const favoriteObj = {
+        id: item.id,
+        type: item.type,
+        nationality: item.nationality,
+        alcoholicOrNot: item.alcoholicOrNot,
+        category: item.category,
+        name: item.name,
+        image: item.image,
+      };
+      return favoriteObj;
+    });
+    return addTagArray;
+  }, []);
+
+  useEffect(() => {
+    const favoriteFromLocal = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const newState = createArray(favoriteFromLocal);
+    setFavoriteRecipes(newState);
+    setData(newState);
+  }, [createArray, localState]);
 
   const selectAll = () => {
     setDrink(true);
@@ -74,20 +76,25 @@ function FavoriteRecipes() {
     setFood(false);
   };
 
-  useEffect(() => {
-    // if (data) {
-    const filters = data.filter((recipe) => {
-      if (food && drink) {
-        return recipe;
-      }
-      if (food) {
-        return recipe.type === 'food';
-      }
-      return recipe.type === 'drink';
-    });
-    setFavoriteRecipes(filters);
-    // }
+  const filterData = useCallback((info) => {
+    if (info) {
+      const filters = info.filter((recipe) => {
+        if (food && drink) {
+          return recipe;
+        }
+        if (food) {
+          return recipe.type === 'food';
+        }
+        return recipe.type === 'drink';
+      });
+      return filters;
+    }
   }, [drink, food]);
+
+  useEffect(() => {
+    const infoData = filterData(data);
+    setFavoriteRecipes(infoData);
+  }, [data, filterData]);
 
   return (
     <div>

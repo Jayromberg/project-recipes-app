@@ -13,7 +13,6 @@ function ShareButton({ index, type, id }) {
     const { pathname } = history.location;
     if (type) {
       setWasCopied(true);
-      console.log(`http://localhost:3000/${type}s/${id}`);
       copy(`http://localhost:3000/${type}s/${id}`);
     }
     setWasCopied(true);

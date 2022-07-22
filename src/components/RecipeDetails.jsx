@@ -30,7 +30,7 @@ function RecipeDetails() {
     } else {
       fetchDetailDrinks(history.params.id);
     }
-  }, []);
+  }, [fetchDetailDrinks, fetchDetailFoods, history.params.id, history.url]);
 
   useEffect(() => {
     if (dataDetail.length > 0) {

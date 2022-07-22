@@ -24,7 +24,7 @@ function RecipeProgress() {
     } else {
       fetchDetailDrinks(history.params.id);
     }
-  }, []);
+  }, [fetchDetailDrinks, fetchDetailFoods, history.params.id, history.url]);
 
   useEffect(() => {
     if (dataDetail.length > 0) {
@@ -39,7 +39,18 @@ function RecipeProgress() {
     }
   }, [dataDetail]);
 
+<<<<<<< HEAD
   const FIVE = 5;
+=======
+  const onClick = ({ target }) => {
+    if (target.checked === true) {
+      setDone([...done, target.value]);
+    } else {
+      const result = done.filter((item) => item !== target.value);
+      setDone(result);
+    }
+  };
+>>>>>>> 0600b6cf61f70e4b235a2ff89ec9719d65f2b926
 
   return (
     dataDetail.length > 0 && (
@@ -85,13 +96,6 @@ function RecipeProgress() {
         <div className="item-wrapper">
           <div
             className="items"
-            onWheel={ (event) => {
-              if (event.deltaY > 0) {
-                event.target.scrollBy(FIVE, 0);
-              } else {
-                event.target.scrollBy(-FIVE, 0);
-              }
-            } }
           />
         </div>
         <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
