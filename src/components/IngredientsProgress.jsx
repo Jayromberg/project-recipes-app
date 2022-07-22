@@ -1,48 +1,64 @@
 import React, { useEffect, useState } from 'react';
-// import { useRouteMatch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function IngredientsProgress({ ingredient, measure, done, setDone, id }) {
-  // const history = useRouteMatch().path;
+function IngredientsProgress({ ingredient, measure, done, setDone, id, type }) {
   const [get, setGet] = useState([]);
+  const [object, setObject] = useState({});
+  const [counter, setCounter] = useState(0);
+  const [redirect, setRedirect] = useState(false);
   const onClick = ({ target }) => {
     if (target.checked === true) {
+      setCounter(counter + 1);
       setDone([...done, target.value]);
     } else {
+      setCounter(counter - 1);
       const result = done.filter((item) => item !== target.value);
       setDone(result);
     }
   };
   useEffect(() => {
-    // const type = history.split(('/'))[1];
+    setObject(
+      {
+        cocktails: {},
+        meals: {},
+      },
+    );
     if (done.length === 0 && localStorage.getItem('inProgressRecipes')) {
       if (get.length === 1) {
         localStorage.setItem('inProgressRecipes', JSON.stringify({
-          [id]: done,
+          ...object, [type]: { ...object[type], [id]: done },
         }));
       }
-      if (Object.keys(
-        JSON.parse(localStorage.getItem('inProgressRecipes')),
-      ).includes(id)) {
-        setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[id]);
+      if (Object.keys(JSON.parse(
+        localStorage.getItem('inProgressRecipes'),
+      )[type]).includes(id)) {
+        setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
       } else {
         localStorage.setItem('inProgressRecipes', JSON.stringify({
           ...JSON.parse(localStorage.getItem('inProgressRecipes')),
-          [id]: done,
+          [type]: {
+            ...JSON.parse(localStorage.getItem('inProgressRecipes'))[type], [id]: done },
         }));
       }
     }
-    if (done.length > 0) {
+    if (done.length > 0 && !localStorage.getItem('inProgressRecipes')) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(
+        { ...object, [type]: { ...object[type], [id]: done } },
+      ));
+      setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
+    }
+    if (done.length > 0 && localStorage.getItem('inProgressRecipes')) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...JSON.parse(localStorage.getItem('inProgressRecipes')),
-        [id]: done,
+        [type]: {
+          ...JSON.parse(localStorage.getItem('inProgressRecipes'))[type], [id]: done },
       }));
-      setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[id]);
+      setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
     }
   }, [done]);
   return (
     <div>
-      {console.log(done, get)}
       {
         ingredient
           .map((item, index) => (
@@ -88,6 +104,21 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id }) {
               )
           ))
       }
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ counter !== ingredient.length }
+        onClick={ () => setRedirect(true) }
+        // style={ {
+        //   marginLeft: '600px',
+        //   position: 'fixed',
+        //   bottom: '0px',
+        // } }
+      >
+        Finalizar Receita
+      </button>
+      {redirect && <Redirect to="/done-recipes" />}
+
     </div>
   );
 }
@@ -98,6 +129,7 @@ IngredientsProgress.propTypes = {
   done: PropTypes.arrayOf(PropTypes.array).isRequired,
   setDone: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default IngredientsProgress;

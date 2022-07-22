@@ -39,19 +39,6 @@ function RecipeProgress() {
     }
   }, [dataDetail]);
 
-<<<<<<< HEAD
-  const FIVE = 5;
-=======
-  const onClick = ({ target }) => {
-    if (target.checked === true) {
-      setDone([...done, target.value]);
-    } else {
-      const result = done.filter((item) => item !== target.value);
-      setDone(result);
-    }
-  };
->>>>>>> 0600b6cf61f70e4b235a2ff89ec9719d65f2b926
-
   return (
     dataDetail.length > 0 && (
       <div>
@@ -91,14 +78,9 @@ function RecipeProgress() {
           measure={ measure }
           done={ done }
           setDone={ setDone }
+          type={ history.url.includes('foods') ? 'meals' : 'cocktails' }
         />
         <p data-testid="instructions">{dataDetail[0].strInstructions}</p>
-        <div className="item-wrapper">
-          <div
-            className="items"
-          />
-        </div>
-        <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
       </div>)
   );
 }

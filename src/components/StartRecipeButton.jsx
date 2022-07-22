@@ -1,50 +1,47 @@
-import React, { useState, useEffect } from 'react';
-// import { useRouteMatch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 function StartRecipeButton({ id }) {
+  const history = useHistory();
   const [isVisible, setIsVisible] = useState(true);
   const [isInProgress, setIsInProgress] = useState(false);
-  const link = useHistory();
-  // const history = useRouteMatch();
 
   useEffect(() => {
-    const { pathname } = link.location;
+    const { pathname } = history.location;
     const doneRecipesLocal = localStorage.getItem('doneRecipes');
     const inProgressRecipesLocal = localStorage.getItem('inProgressRecipes');
     if (doneRecipesLocal) {
-      const recipes = JSON.parse(inProgressRecipesLocal);
-      setIsVisible(recipes.some((recipe) => recipe.id === id));
+      const recipes = JSON.parse(doneRecipesLocal);
+      setIsVisible(!recipes.some((recipe) => recipe.id === id));
     }
     if (isInProgress) {
       setIsVisible(false);
     }
     if (inProgressRecipesLocal && pathname.includes('foods')) {
       const recipes = JSON.parse(inProgressRecipesLocal);
-      const keysFoods = Object.keys(recipes);
+      const keysFoods = Object.keys(recipes.meals);
       setIsInProgress(keysFoods.some((recipeID) => recipeID === id));
     }
     if (inProgressRecipesLocal && pathname.includes('drinks')) {
       const recipes = JSON.parse(inProgressRecipesLocal);
-      const keysDrinks = Object.keys(recipes);
+      const keysDrinks = Object.keys(recipes.cocktails);
       setIsInProgress(keysDrinks.some((recipeID) => recipeID === id));
     }
-  }, [link.location, id, isInProgress]);
+  }, [history.location, id, isInProgress]);
 
   function redirect() {
-    const { pathname } = link.location;
+    const { pathname } = history.location;
     if (pathname.includes('foods')) {
-      link.push(`/foods/${id}/in-progress`);
+      history.push(`/foods/${id}/in-progress`);
     } else {
-      link.push(`/drinks/${id}/in-progress`);
+      history.push(`/drinks/${id}/in-progress`);
     }
   }
 
   return (
     <div>
-      {
-        isVisible
+      {isVisible
         && (
           <button
             style={ {
@@ -58,8 +55,7 @@ function StartRecipeButton({ id }) {
           >
             Start Recipe
           </button>
-        )
-      }
+        )}
       {isInProgress
         && (
           <button
@@ -72,6 +68,7 @@ function StartRecipeButton({ id }) {
             type="button"
             data-testid="start-recipe-btn"
             onClick={ redirect }
+
           >
             Continue Recipe
           </button>
