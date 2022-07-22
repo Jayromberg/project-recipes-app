@@ -68,18 +68,16 @@ function DoneRecipes() {
   };
 
   useEffect(() => {
-    if (data) {
-      const filters = data.filter((recipe) => {
-        if (food && drink) {
-          return recipe;
-        }
-        if (food) {
-          return recipe.type === 'food';
-        }
-        return recipe.type === 'drink';
-      });
-      setdoneRecipes(filters);
-    }
+    const filters = data.filter((recipe) => {
+      if (food && drink) {
+        return recipe;
+      }
+      if (food) {
+        return recipe.type === 'food';
+      }
+      return recipe.type === 'drink';
+    });
+    setdoneRecipes(filters);
   }, [drink, food]);
 
   return (
