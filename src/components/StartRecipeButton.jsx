@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+// import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 function StartRecipeButton({ id }) {
-  const history = useHistory();
   const [isVisible, setIsVisible] = useState(true);
   const [isInProgress, setIsInProgress] = useState(false);
+  const link = useHistory();
+  // const history = useRouteMatch();
 
   useEffect(() => {
-    const { pathname } = history.location;
+    const { pathname } = link.location;
     const doneRecipesLocal = localStorage.getItem('doneRecipes');
     const inProgressRecipesLocal = localStorage.getItem('inProgressRecipes');
     if (doneRecipesLocal) {
-      const recipes = JSON.parse(doneRecipesLocal);
-      setIsVisible(!recipes.some((recipe) => recipe.id === id));
+      const recipes = JSON.parse(inProgressRecipesLocal);
+      setIsVisible(recipes.some((recipe) => recipe.id === id));
     }
     if (isInProgress) {
       setIsVisible(false);
@@ -28,20 +30,21 @@ function StartRecipeButton({ id }) {
       const keysDrinks = Object.keys(recipes);
       setIsInProgress(keysDrinks.some((recipeID) => recipeID === id));
     }
-  }, [history.location, id, isInProgress]);
+  }, [link.location, id, isInProgress]);
 
   function redirect() {
-    const { pathname } = history.location;
+    const { pathname } = link.location;
     if (pathname.includes('foods')) {
-      history.push(`/foods/${id}/in-progress`);
+      link.push(`/foods/${id}/in-progress`);
     } else {
-      history.push(`/drinks/${id}/in-progress`);
+      link.push(`/drinks/${id}/in-progress`);
     }
   }
 
   return (
     <div>
-      {isVisible
+      {
+        isVisible
         && (
           <button
             style={ {
@@ -55,7 +58,8 @@ function StartRecipeButton({ id }) {
           >
             Start Recipe
           </button>
-        )}
+        )
+      }
       {isInProgress
         && (
           <button

@@ -128,11 +128,9 @@ function RecipeDetails() {
             )}
           </div>
         </div>
-        <div>
-          <StartRecipeButton
-            id={ history.params.id }
-          />
-        </div>
+        <StartRecipeButton
+          id={ history.params.id }
+        />
       </div>)
   );
 }

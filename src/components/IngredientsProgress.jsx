@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+// import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function IngredientsProgress({ ingredient, measure, done, setDone, id }) {
+  // const history = useRouteMatch().path;
   const [get, setGet] = useState([]);
   const onClick = ({ target }) => {
     if (target.checked === true) {
@@ -12,11 +14,10 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id }) {
     }
   };
   useEffect(() => {
+    // const type = history.split(('/'))[1];
     if (done.length === 0 && localStorage.getItem('inProgressRecipes')) {
       if (get.length === 1) {
-        console.log('TA NA HORA');
         localStorage.setItem('inProgressRecipes', JSON.stringify({
-          ...JSON.parse(localStorage.getItem('inProgressRecipes')),
           [id]: done,
         }));
       }
