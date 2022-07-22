@@ -39,8 +39,6 @@ function RecipeProgress() {
     }
   }, [dataDetail]);
 
-  const FIVE = 5;
-
   const onClick = ({ target }) => {
     if (target.checked === true) {
       setDone([...done, target.value]);
@@ -93,13 +91,6 @@ function RecipeProgress() {
         <div className="item-wrapper">
           <div
             className="items"
-            onWheel={ (event) => {
-              if (event.deltaY > 0) {
-                event.target.scrollBy(FIVE, 0);
-              } else {
-                event.target.scrollBy(-FIVE, 0);
-              }
-            } }
           />
         </div>
         <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>

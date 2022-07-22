@@ -122,4 +122,49 @@ describe('testa o componente de receitas Favoritas', () => {
       expect(screen.queryByText(/abc/i)).not.toBeInTheDocument();
     });
   });
+
+  test('Testa o remover item do favorito', async () => {
+    const favoriteRecipes = [{
+      id: '52771',
+      type: 'food',
+      nationality: 'Italian',
+      category: 'Vegetarian',
+      alcoholicOrNot: '',
+      name: 'Spicy Arrabiata Penne',
+      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    const nameFood = await screen.findByText(/spicy arrabiata penne/i);
+    const blackHeart = screen.getByRole('img', { name: /blackhearticon/i });
+    expect(nameFood).toBeInTheDocument();
+    expect(blackHeart).toBeInTheDocument();
+
+    userEvent.click(blackHeart);
+
+    const newLocalStorege = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    expect(newLocalStorege).toEqual([]);
+  });
+  test('Testa a função copy', async () => {
+    // https://cursos.alura.com.br/forum/topico-como-testar-o-que-tem-na-area-de-transferencia-e-um-select-multiplo-150788
+    navigator.clipboard = {
+      writeText: jest.fn(),
+    };
+
+    const favoriteRecipes = [{
+      id: '52771',
+      type: 'food',
+      nationality: 'Italian',
+      category: 'Vegetarian',
+      alcoholicOrNot: '',
+      name: 'Spicy Arrabiata Penne',
+      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+
+    const shareButton = await screen.findByRole('img', { name: /share button/i });
+    userEvent.click(shareButton);
+    expect(shareButton).toBeInTheDocument();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/favorite-recipes');
+  });
 });
