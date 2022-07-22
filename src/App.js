@@ -12,7 +12,7 @@ import DrinkDetail from './pages/DrinkDetail';
 // import DrinkInProgress from './pages/DrinkInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipes from './pages/favoriteRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import DetailProvider from './context/DetailProvider';
 import RecipeInProgress from './pages/RecipeInProgress';
 
