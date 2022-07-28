@@ -39,15 +39,6 @@ function RecipeProgress() {
     }
   }, [dataDetail]);
 
-  const onClick = ({ target }) => {
-    if (target.checked === true) {
-      setDone([...done, target.value]);
-    } else {
-      const result = done.filter((item) => item !== target.value);
-      setDone(result);
-    }
-  };
-
   return (
     dataDetail.length > 0 && (
       <div>
@@ -82,18 +73,14 @@ function RecipeProgress() {
           </div>
         )}
         <IngredientsProgress
+          id={ history.params.id }
           ingredient={ ingredient }
           measure={ measure }
-          onClick={ onClick }
           done={ done }
+          setDone={ setDone }
+          type={ history.url.includes('foods') ? 'meals' : 'cocktails' }
         />
         <p data-testid="instructions">{dataDetail[0].strInstructions}</p>
-        <div className="item-wrapper">
-          <div
-            className="items"
-          />
-        </div>
-        <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
       </div>)
   );
 }

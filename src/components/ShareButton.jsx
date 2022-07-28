@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function ShareButton({ index, type, id }) {
-  const history = useHistory();
   const [wasCopied, setWasCopied] = useState(false);
+  const link = useRouteMatch();
 
   function copyLink() {
-    const { pathname } = history.location;
     if (type) {
       setWasCopied(true);
       copy(`http://localhost:3000/${type}s/${id}`);
     }
     setWasCopied(true);
-    copy(`http://localhost:3000${pathname}`);
+    console.log((link.url).split('/')[1]);
+    const param1 = (link.url).split('/')[1];
+    const param2 = (link.url).split('/')[2];
+    copy(`http://localhost:3000/${param1}/${param2}`);
   }
 
   return (

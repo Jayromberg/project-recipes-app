@@ -67,6 +67,8 @@ function StartRecipeButton({ id }) {
             className="start-recipe-btn"
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ redirect }
+
           >
             Continue Recipe
           </button>

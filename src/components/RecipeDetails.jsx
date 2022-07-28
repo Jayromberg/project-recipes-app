@@ -99,13 +99,6 @@ function RecipeDetails() {
         <div className="item-wrapper">
           <div
             className="items"
-            // onWheel={ (event) => {
-            //   if (event.deltaY > 0) {
-            //     event.target.scrollBy(FIVE, 0);
-            //   } else {
-            //     event.target.scrollBy(-FIVE, 0);
-            //   }
-            // } }
           >
             {history.url.includes('drinks') ? (
               foodsRecipes.filter((_food, index) => index <= FIVE)
@@ -128,11 +121,9 @@ function RecipeDetails() {
             )}
           </div>
         </div>
-        <div>
-          <StartRecipeButton
-            id={ history.params.id }
-          />
-        </div>
+        <StartRecipeButton
+          id={ history.params.id }
+        />
       </div>)
   );
 }
