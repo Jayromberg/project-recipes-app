@@ -8,8 +8,6 @@ import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import FoodDetail from './pages/FoodDetail';
 import DrinkDetail from './pages/DrinkDetail';
-// import FoodInProgress from './pages/FoodInProgress';
-// import DrinkInProgress from './pages/DrinkInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';

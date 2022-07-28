@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom/';
 import RecipesContext from '../context/RecipesContext';
+import '../App.css';
 
 function SearchBar({ setHeaderState, headerState }) {
   const { fetchFoodsOrDrinksRecipesFilter } = useContext(RecipesContext);
@@ -14,7 +15,7 @@ function SearchBar({ setHeaderState, headerState }) {
   }
 
   return (
-    <div>
+    <div className="searchBarDiv">
       <form>
         <label htmlFor="ingredient-search-radio">
           <input
@@ -26,8 +27,10 @@ function SearchBar({ setHeaderState, headerState }) {
             onChange={ (e) => setHeaderState({
               ...headerState, searchRadio: e.target.value }) }
           />
+          {' '}
           Ingrediente
         </label>
+        <br />
         <label htmlFor="name-search-radio">
           <input
             type="radio"
@@ -38,8 +41,10 @@ function SearchBar({ setHeaderState, headerState }) {
             onChange={ (e) => setHeaderState({
               ...headerState, searchRadio: e.target.value }) }
           />
+          {' '}
           Nome
         </label>
+        <br />
         <label htmlFor="first-letter-search-radio">
           <input
             type="radio"
@@ -50,18 +55,18 @@ function SearchBar({ setHeaderState, headerState }) {
             onChange={ (e) => setHeaderState({
               ...headerState, searchRadio: e.target.value }) }
           />
+          {' '}
           Primeira Letra
         </label>
       </form>
-      <div>
-        <button
-          type="button"
-          data-testid="exec-search-btn"
-          onClick={ searchClick }
-        >
-          Busca
-        </button>
-      </div>
+      <br />
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ searchClick }
+      >
+        Busca
+      </button>
     </div>
   );
 }

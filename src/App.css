@@ -15,19 +15,6 @@
   max-height: 80vh;
 }
 
-/*
-#iceLeft {
-  animation: clink .8s infinite ease;
-  opacity: 0.6;
-  transform-origin: 36px 66px;
-}
-
-#iceRight {
-  animation: clink .8s .2s infinite ease;
-  opacity: 0.6;
-  transform-origin: 60px 78px;
-}
-*/
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;
@@ -66,3 +53,74 @@
     transform: rotate(-10deg);
   }
 }
+
+.loginForm {
+  background-color: rgb(241, 159, 100);
+  width: 90%;
+  padding: 50px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.bodyLogin {
+  background-color: rgba(230, 176, 138, 0.781);
+}
+
+.loginForm button {
+  margin-left: 40%;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: rgb(224, 223, 223);
+  text-decoration-color: black;
+}
+
+.header {
+  background-color:rgba(248, 186, 141, 0.596);
+}
+
+.Footer {
+  background-color:rgba(248, 186, 141, 0.596);
+  margin-left: 75%;
+  padding: 5px;
+  padding-right: 8px;
+  border-radius: 5px;
+}
+
+.header h1 {
+  text-align: center;
+  color: rgb(4, 83, 4);
+}
+
+.links {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+}
+
+.headerDiv {
+  margin-left: 75%;
+}
+
+.searchBarDiv {
+  display: flex;
+  padding: 10px;
+  color: rgb(3, 66, 3); 
+}
+
+.searchBarDiv button {
+  margin-left: 40%;
+  margin-top: 18%;
+  border-radius: 3px;
+  background-color: rgb(224, 223, 223);
+  text-decoration-color: black;
+  height: 33px;
+  padding: 4px;
+}
+
+.searchBarDiv form input {
+  margin-left: 2px;
+  margin-right: 1px;
+}
+
+  
