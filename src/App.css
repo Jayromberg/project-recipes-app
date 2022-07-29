@@ -89,7 +89,7 @@
 
 .header h1 {
   text-align: center;
-  color: rgb(4, 83, 4);
+  color: black
 }
 
 .links {
@@ -105,7 +105,7 @@
 .searchBarDiv {
   display: flex;
   padding: 10px;
-  color: rgb(3, 66, 3); 
+  color: black
 }
 
 .searchBarDiv button {

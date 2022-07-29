@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import DetailContext from '../context/DetailContext';
+import './RecipeDetails.css';
 
 function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
   isfavorite }) {
@@ -98,7 +99,7 @@ function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
           <img
             data-testid={ isfavorite ? `${index}-horizontal-favorite-btn`
               : 'favorite-btn' }
-            // data-testid="favorite-btn"
+            className="links"
             src={ blackHeartIcon }
             alt="blackHeartIcon"
           />
@@ -109,6 +110,7 @@ function FavoriteButton({ dataDetail, id, setLocalState, localState, index,
           onClick={ saveFavorite }
         >
           <img
+            className="links"
             data-testid={ isfavorite ? `${index}-horizontal-favorite-btn`
               : 'favorite-btn' }
             src={ whiteHeartIcon }

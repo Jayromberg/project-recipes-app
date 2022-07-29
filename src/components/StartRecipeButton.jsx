@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './RecipeDetails.css';
 
 function StartRecipeButton({ id }) {
   const history = useHistory();

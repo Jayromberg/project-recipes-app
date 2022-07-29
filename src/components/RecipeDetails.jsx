@@ -49,13 +49,13 @@ function RecipeDetails() {
 
   return (
     dataDetail.length > 0 && (
-      <div>
+      <div className="detailsDiv">
         <FavoriteButton
           dataDetail={ dataDetail }
         />
         <ShareButton />
         {history.url.includes('foods') ? (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"
@@ -67,7 +67,7 @@ function RecipeDetails() {
             <h4 data-testid="recipe-category">{dataDetail[0].strCategory}</h4>
           </div>
         ) : (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"

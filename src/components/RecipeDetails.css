@@ -16,3 +16,29 @@
   scroll-snap-type: x mandatory;
 }
 
+.links {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+}
+
+.detailsDiv {
+  background-color: rgba(179, 86, 19, 0.527);
+}
+
+.recipeDiv{
+  text-align: center;
+}
+
+.recipeDiv img {
+  border: 3px rgba(248, 186, 141, 0.705) solid;
+  width: 50%;
+  height: 40%;
+}
+
+.start-recipe-btn{
+  border-radius: 3px;
+  background-color: rgb(224, 223, 223);
+  text-decoration-color: black;
+  padding: 3px;
+}
