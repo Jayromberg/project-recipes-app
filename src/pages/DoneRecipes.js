@@ -25,7 +25,7 @@ function DoneRecipes() {
           type: item.type,
           nationality: item.nationality,
           category: item.category,
-          alcoholicOrNot: item.alcoholicOrNot,
+          // alcoholicOrNot: item.alcoholicOrNot,
           name: item.name,
           doneDate: item.doneDate,
           image: item.image,
@@ -36,7 +36,7 @@ function DoneRecipes() {
       const favoriteObj = {
         id: item.id,
         type: item.type,
-        nationality: item.nationality,
+        // nationality: item.nationality,
         alcoholicOrNot: item.alcoholicOrNot,
         category: item.category,
         name: item.name,

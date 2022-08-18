@@ -42,3 +42,11 @@
   text-decoration-color: black;
   padding: 3px;
 }
+
+.finish-recipe-btn{
+  margin-left: 63%;
+  border-radius: 3px;
+  background-color: rgb(224, 223, 223);
+  text-decoration-color: black;
+  padding: 1px;
+}

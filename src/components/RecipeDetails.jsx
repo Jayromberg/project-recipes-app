@@ -25,6 +25,13 @@ function RecipeDetails() {
   const [measure, setMeasure] = useState([]);
 
   useEffect(() => {
+    const local = localStorage.getItem('doneRecipes');
+    if (local === null || local === '1') {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+  }, []);
+
+  useEffect(() => {
     if (history.url.includes('foods')) {
       fetchDetailFoods(history.params.id);
     } else {
