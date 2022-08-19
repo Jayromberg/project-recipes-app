@@ -1,30 +1,30 @@
 .recipesDiv {
-    background-color: rgba(179, 86, 19, 0.582);
+  background-color: rgba(179, 86, 19, 0.582);
 }
 
 .recipesDiv button {
-  width: 100px;
+  background-color: rgb(224, 223, 223);
+  border-radius: 3px;
+  font-size: smaller;
   margin: 3px;
   margin-left: 8px;
-  border-radius: 3px;
-  background-color: rgb(224, 223, 223);
   text-decoration-color: black;
-  font-size: smaller;
+  width: 100px;
 }
 
 .recipeSection {
-    display: inline-block;
-    border: 2px rgba(248, 186, 141, 0.596) solid;
-    text-align: center;
-    width: 45%;
-    margin: 4px;
-    margin-left: 10px;
+  border: 2px rgba(248, 186, 141, 0.596) solid;
+  display: inline-block;
+  margin: 4px;
+  margin-left: 10px;
+  text-align: center;
+  width: 45%;
 }
 
 .recipeSection p {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .recipeSection img {
-    margin-top: 10px;
+  margin-top: 10px;
 }
