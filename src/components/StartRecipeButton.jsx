@@ -39,13 +39,15 @@ function StartRecipeButton({ id }) {
       history.push(`/drinks/${id}/in-progress`);
     }
   }
-
+  console.log(isVisible);
+  console.log(isInProgress);
   return (
     <div>
       {isVisible
         && (
           <button
             style={ {
+              marginLeft: '60%',
               position: 'fixed',
               bottom: '0px',
             } }
@@ -61,7 +63,7 @@ function StartRecipeButton({ id }) {
         && (
           <button
             style={ {
-              marginLeft: '600px',
+              marginLeft: '60%',
               position: 'fixed',
               bottom: '0px',
             } }

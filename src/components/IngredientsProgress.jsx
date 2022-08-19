@@ -9,6 +9,7 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
   const [object, setObject] = useState({});
   const [counter, setCounter] = useState(0);
   const [redirect, setRedirect] = useState(false);
+  const [disabledBtn, setDisableBtn] = useState(true);
   const onClick = ({ target }) => {
     if (target.checked === true) {
       setCounter(counter + 1);
@@ -61,13 +62,32 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
     }
   }, [done]);
 
-  console.log(dataDetail);
+  useEffect(() => {
+    const getinProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (getinProgressRecipes.meals[id] && getinProgressRecipes.meals[id]
+      .length !== ingredient.length) {
+      setDisableBtn(true);
+    }
+    if (getinProgressRecipes.cocktails[id] && getinProgressRecipes
+      .cocktails[id].length !== ingredient.length) {
+      setDisableBtn(true);
+    }
+    if (getinProgressRecipes.meals[id] && getinProgressRecipes.meals[id]
+      .length === ingredient.length) {
+      setDisableBtn(false);
+    }
+    if (getinProgressRecipes.cocktails[id] && getinProgressRecipes
+      .cocktails[id].length === ingredient.length) {
+      setDisableBtn(false);
+    }
+  });
+
   const SaveRecipe = () => {
     const getinProgressRecipes = JSON.parse(localStorage
       .getItem('inProgressRecipes')) || [];
-    console.log(getinProgressRecipes);
+
     if (getinProgressRecipes.meals[id]) {
-      console.log('dentro do if');
       const obj = {
         id: dataDetail[0].idMeal,
         type: 'food',
@@ -80,12 +100,10 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
       };
 
       const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-      console.log(getDoneRecipes);
       const newDones = [...getDoneRecipes, obj];
       localStorage.setItem('doneRecipes', JSON.stringify(newDones));
     }
     if (getinProgressRecipes.cocktails[id]) {
-      console.log('drink if', id);
       const obj = {
         id: dataDetail[0].idDrink,
         type: 'drink',
@@ -96,11 +114,9 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
         doneDate: '01/01/2022',
       };
       const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-      console.log(getDoneRecipes);
       const newArray = [...getDoneRecipes, obj];
       localStorage.setItem('doneRecipes', JSON.stringify(newArray));
     }
-
     setRedirect(true);
   };
 
@@ -155,7 +171,7 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
         className="finish-recipe-btn"
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ counter !== ingredient.length }
+        disabled={ disabledBtn }
         onClick={ () => SaveRecipe() }
       >
         Finalizar Receita
