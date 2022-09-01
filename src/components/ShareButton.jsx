@@ -30,6 +30,7 @@ function ShareButton({ index, type, id }) {
           onClick={ copyLink }
         >
           <img
+            className="links"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             alt="Share Button"

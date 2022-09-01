@@ -39,8 +39,7 @@ function StartRecipeButton({ id }) {
       history.push(`/drinks/${id}/in-progress`);
     }
   }
-  console.log(isVisible);
-  console.log(isInProgress);
+
   return (
     <div>
       {isVisible
