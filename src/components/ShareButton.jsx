@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import './RecipeDetails.css';
 
 const copy = require('clipboard-copy');
 
@@ -29,6 +30,7 @@ function ShareButton({ index, type, id }) {
           onClick={ copyLink }
         >
           <img
+            className="links"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             alt="Share Button"
@@ -40,6 +42,7 @@ function ShareButton({ index, type, id }) {
           onClick={ copyLink }
         >
           <img
+            className="links"
             src={ shareIcon }
             data-testid="share-btn"
             alt="Share Button"

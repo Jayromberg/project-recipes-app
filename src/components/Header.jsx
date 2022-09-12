@@ -3,6 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import '../App.css';
 
 const INICIAL_STATE_HEADER = {
   title: '',
@@ -69,13 +70,14 @@ function Header() {
   }, [isElementVisible, pathname]);
 
   return (
-    <section>
+    <section className="header">
       <h1 data-testid="page-title">{headerState.title}</h1>
-      <div>
+      <div className="headerDiv">
         {headerState.hasProfile
         && (
           <Link to="/profile">
             <img
+              className="links"
               type="image/svg+xml"
               src={ profileIcon }
               alt="profileIcon"
@@ -91,6 +93,7 @@ function Header() {
               isVisible: !headerState.isVisible }) }
           >
             <img
+              className="links"
               type="image/svg+xml"
               src={ searchIcon }
               alt="searchIcon"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './RecipeDetails.css';
 
 function StartRecipeButton({ id }) {
   const history = useHistory();
@@ -45,6 +46,7 @@ function StartRecipeButton({ id }) {
         && (
           <button
             style={ {
+              marginLeft: '60%',
               position: 'fixed',
               bottom: '0px',
             } }
@@ -60,7 +62,7 @@ function StartRecipeButton({ id }) {
         && (
           <button
             style={ {
-              marginLeft: '600px',
+              marginLeft: '60%',
               position: 'fixed',
               bottom: '0px',
             } }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 import '../components/ImageSize.css';
+import './DoneRecipes.css';
 
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -25,7 +26,6 @@ function DoneRecipes() {
           type: item.type,
           nationality: item.nationality,
           category: item.category,
-          alcoholicOrNot: item.alcoholicOrNot,
           name: item.name,
           doneDate: item.doneDate,
           image: item.image,
@@ -36,7 +36,6 @@ function DoneRecipes() {
       const favoriteObj = {
         id: item.id,
         type: item.type,
-        nationality: item.nationality,
         alcoholicOrNot: item.alcoholicOrNot,
         category: item.category,
         name: item.name,
@@ -92,8 +91,8 @@ function DoneRecipes() {
     <div>
       <Header />
       <section>
-        <p>doneRecipes</p>
         <button
+          className="filterbtn"
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ selectAll }
@@ -102,6 +101,7 @@ function DoneRecipes() {
 
         </button>
         <button
+          className="filterbtn"
           data-testid="filter-by-food-btn"
           type="button"
           onClick={ filterFood }
@@ -110,6 +110,7 @@ function DoneRecipes() {
 
         </button>
         <button
+          className="filterbtn"
           data-testid="filter-by-drink-btn"
           type="button"
           onClick={ filterDrinks }
@@ -120,11 +121,12 @@ function DoneRecipes() {
         { doneRecipes && doneRecipes.map((item, index) => (
           item.type === 'food'
             ? (
-              <div key={ item.id }>
+              <div key={ item.id } className="itemsDiv">
                 <Link
                   to={ `/foods/${item.id}` }
                 >
                   <img
+                    className="doneImages"
                     data-testid={ `${index}-horizontal-image` }
                     src={ item.image }
                     alt={ item.name }
@@ -148,12 +150,17 @@ function DoneRecipes() {
 
                     </p>)
                 ))}
-                <ShareButton index={ index } id={ item.id } type={ item.type } />
+                <ShareButton
+                  index={ index }
+                  id={ item.id }
+                  type={ item.type }
+                />
               </div>
             ) : (
-              <div key={ item.id }>
+              <div key={ item.id } className="itemsDiv">
                 <Link to={ `/drinks/${item.id}` }>
                   <img
+                    className="doneImages"
                     data-testid={ `${index}-horizontal-image` }
                     src={ item.image }
                     alt={ item.name }
@@ -165,7 +172,12 @@ function DoneRecipes() {
 
                 </p>
                 <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-                <ShareButton index={ index } id={ item.id } type={ item.type } />
+                <ShareButton
+                  className="links"
+                  index={ index }
+                  id={ item.id }
+                  type={ item.type }
+                />
               </div>)))}
       </section>
     </div>

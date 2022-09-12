@@ -4,6 +4,7 @@ import FavoriteButton from '../components/FavoriteButton';
 import Header from '../components/Header';
 import ShareButton from '../components/ShareButton';
 import '../components/ImageSize.css';
+import './DoneRecipes.css';
 
 function FavoriteRecipes() {
   const [data, setData] = useState([]);
@@ -100,8 +101,8 @@ function FavoriteRecipes() {
     <div>
       <Header />
       <section>
-        <p>favoriteRecipes</p>
         <button
+          className="filterbtn"
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ selectAll }
@@ -110,6 +111,7 @@ function FavoriteRecipes() {
 
         </button>
         <button
+          className="filterbtn"
           data-testid="filter-by-food-btn"
           type="button"
           onClick={ filterFood }
@@ -118,6 +120,7 @@ function FavoriteRecipes() {
 
         </button>
         <button
+          className="filterbtn"
           data-testid="filter-by-drink-btn"
           type="button"
           onClick={ filterDrinks }
@@ -128,11 +131,12 @@ function FavoriteRecipes() {
         { favoriteRecipes && favoriteRecipes.map((item, index) => (
           item.type === 'food'
             ? (
-              <div key={ item.id }>
+              <div key={ item.id } className="itemsDiv">
                 <Link
                   to={ `/foods/${item.id}` }
                 >
                   <img
+                    className="doneImages"
                     data-testid={ `${index}-horizontal-image` }
                     src={ item.image }
                     alt={ item.name }
@@ -156,7 +160,12 @@ function FavoriteRecipes() {
 
                     </p>)
                 ))}
-                <ShareButton index={ index } id={ item.id } type={ item.type } />
+                <ShareButton
+                  className="links"
+                  index={ index }
+                  id={ item.id }
+                  type={ item.type }
+                />
                 <FavoriteButton
                   id={ item.id }
                   setLocalState={ setLocalState }
@@ -164,11 +173,13 @@ function FavoriteRecipes() {
                   index={ index }
                   isfavorite
                 />
+
               </div>
             ) : (
-              <div key={ item.id }>
+              <div key={ item.id } className="itemsDiv">
                 <Link to={ `/drinks/${item.id}` }>
                   <img
+                    className="doneImages"
                     data-testid={ `${index}-horizontal-image` }
                     src={ item.image }
                     alt={ item.name }
@@ -180,7 +191,12 @@ function FavoriteRecipes() {
 
                 </p>
                 <p data-testid={ `${index}-horizontal-done-date` }>{item.doneDate}</p>
-                <ShareButton index={ index } id={ item.id } type={ item.type } />
+
+                <ShareButton
+                  index={ index }
+                  id={ item.id }
+                  type={ item.type }
+                />
                 <FavoriteButton
                   id={ item.id }
                   index={ index }
@@ -188,6 +204,7 @@ function FavoriteRecipes() {
                   localState={ localState }
                   isfavorite
                 />
+
               </div>)))}
       </section>
     </div>

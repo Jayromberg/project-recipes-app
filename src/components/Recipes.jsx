@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import './Recipes.css';
 
 function Recipes() {
   const TWELVE = 12;
@@ -99,7 +100,7 @@ function Recipes() {
   };
 
   return (
-    <div>
+    <div className="recipesDiv">
       { categories.map((item) => (
         <button
           key={ item.strCategory }
@@ -121,7 +122,11 @@ function Recipes() {
 
       </button>
       { categoryRecipe && withCategory && (categoryRecipe.map((item, index) => (
-        <section data-testid={ `${index}-recipe-card` } key={ item.id }>
+        <section
+          data-testid={ `${index}-recipe-card` }
+          key={ item.id }
+          className="recipeSection"
+        >
           <Link to={ `/${item.type}/${item.id}` }>
             <img
               src={ item.image }
@@ -133,7 +138,11 @@ function Recipes() {
         </section>
       ))) }
       { isFood && All && foodsRecipes.map((item, index) => (
-        <section data-testid={ `${index}-recipe-card` } key={ item.idMeal }>
+        <section
+          data-testid={ `${index}-recipe-card` }
+          key={ item.idMeal }
+          className="recipeSection"
+        >
           <Link to={ `/foods/${item.idMeal}` }>
             <img
               src={ item.strMealThumb }
@@ -145,7 +154,11 @@ function Recipes() {
         </section>
       )) }
       { isDrink && All && drinkRecipes.map((item, index) => (
-        <section data-testid={ `${index}-recipe-card` } key={ item.idDrink }>
+        <section
+          data-testid={ `${index}-recipe-card` }
+          key={ item.idDrink }
+          className="recipeSection"
+        >
           <Link to={ `/drinks/${item.idDrink}` }>
             <img
               src={ item.strDrinkThumb }

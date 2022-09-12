@@ -5,6 +5,7 @@ import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
 import Header from './Header';
 import IngredientsProgress from './IngredientsProgress';
+import './RecipeDetails.css';
 
 function RecipeProgress() {
   const history = useRouteMatch();
@@ -41,14 +42,14 @@ function RecipeProgress() {
 
   return (
     dataDetail.length > 0 && (
-      <div>
+      <div className="detailsDiv">
         <Header />
         <FavoriteButton
           dataDetail={ dataDetail }
         />
         <ShareButton />
         {history.url.includes('foods') ? (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"
@@ -60,7 +61,7 @@ function RecipeProgress() {
             <h4 data-testid="recipe-category">{dataDetail[0].strCategory}</h4>
           </div>
         ) : (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"
@@ -73,6 +74,7 @@ function RecipeProgress() {
           </div>
         )}
         <IngredientsProgress
+          dataDetail={ dataDetail }
           id={ history.params.id }
           ingredient={ ingredient }
           measure={ measure }

@@ -25,6 +25,13 @@ function RecipeDetails() {
   const [measure, setMeasure] = useState([]);
 
   useEffect(() => {
+    const local = localStorage.getItem('doneRecipes');
+    if (local === null || local === '1') {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+  }, []);
+
+  useEffect(() => {
     if (history.url.includes('foods')) {
       fetchDetailFoods(history.params.id);
     } else {
@@ -49,13 +56,13 @@ function RecipeDetails() {
 
   return (
     dataDetail.length > 0 && (
-      <div>
+      <div className="detailsDiv">
         <FavoriteButton
           dataDetail={ dataDetail }
         />
         <ShareButton />
         {history.url.includes('foods') ? (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"
@@ -67,7 +74,7 @@ function RecipeDetails() {
             <h4 data-testid="recipe-category">{dataDetail[0].strCategory}</h4>
           </div>
         ) : (
-          <div>
+          <div className="recipeDiv">
             <img
               width="100%"
               height="600"

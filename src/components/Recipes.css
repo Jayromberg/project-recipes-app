@@ -1,0 +1,30 @@
+.recipesDiv {
+  background-color: rgba(179, 86, 19, 0.582);
+}
+
+.recipesDiv button {
+  background-color: rgb(224, 223, 223);
+  border-radius: 3px;
+  font-size: smaller;
+  margin: 3px;
+  margin-left: 8px;
+  text-decoration-color: black;
+  width: 100px;
+}
+
+.recipeSection {
+  border: 2px rgba(248, 186, 141, 0.596) solid;
+  display: inline-block;
+  margin: 4px;
+  margin-left: 10px;
+  text-align: center;
+  width: 45%;
+}
+
+.recipeSection p {
+  margin-top: 5px;
+}
+
+.recipeSection img {
+  margin-top: 10px;
+}

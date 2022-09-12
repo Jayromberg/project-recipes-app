@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './RecipeDetails.css';
 
-function IngredientsProgress({ ingredient, measure, done, setDone, id, type }) {
+function IngredientsProgress({ ingredient, measure, done, setDone, id, type,
+  dataDetail }) {
   const [get, setGet] = useState([]);
   const [object, setObject] = useState({});
   const [counter, setCounter] = useState(0);
   const [redirect, setRedirect] = useState(false);
+  const [disabledBtn, setDisableBtn] = useState(true);
   const onClick = ({ target }) => {
     if (target.checked === true) {
       setCounter(counter + 1);
@@ -17,6 +20,7 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type }) {
       setDone(result);
     }
   };
+
   useEffect(() => {
     setObject(
       {
@@ -57,6 +61,65 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type }) {
       setGet(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
     }
   }, [done]);
+
+  useEffect(() => {
+    const getinProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (getinProgressRecipes.meals[id] && getinProgressRecipes.meals[id]
+      .length !== ingredient.length) {
+      setDisableBtn(true);
+    }
+    if (getinProgressRecipes.cocktails[id] && getinProgressRecipes
+      .cocktails[id].length !== ingredient.length) {
+      setDisableBtn(true);
+    }
+    if (getinProgressRecipes.meals[id] && getinProgressRecipes.meals[id]
+      .length === ingredient.length) {
+      setDisableBtn(false);
+    }
+    if (getinProgressRecipes.cocktails[id] && getinProgressRecipes
+      .cocktails[id].length === ingredient.length) {
+      setDisableBtn(false);
+    }
+  });
+
+  const SaveRecipe = () => {
+    const getinProgressRecipes = JSON.parse(localStorage
+      .getItem('inProgressRecipes')) || [];
+
+    if (getinProgressRecipes.meals[id]) {
+      const obj = {
+        id: dataDetail[0].idMeal,
+        type: 'food',
+        nationality: dataDetail[0].strArea,
+        category: dataDetail[0].strCategory,
+        name: dataDetail[0].strMeal,
+        image: dataDetail[0].strMealThumb,
+        doneDate: '01/01/2022',
+        tags: [dataDetail[0].strTags || ''],
+      };
+
+      const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+      const newDones = [...getDoneRecipes, obj];
+      localStorage.setItem('doneRecipes', JSON.stringify(newDones));
+    }
+    if (getinProgressRecipes.cocktails[id]) {
+      const obj = {
+        id: dataDetail[0].idDrink,
+        type: 'drink',
+        category: dataDetail[0].strCategory,
+        alcoholicOrNot: dataDetail[0].strAlcoholic,
+        name: dataDetail[0].strDrink,
+        image: dataDetail[0].strDrinkThumb,
+        doneDate: '01/01/2022',
+      };
+      const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const newArray = [...getDoneRecipes, obj];
+      localStorage.setItem('doneRecipes', JSON.stringify(newArray));
+    }
+    setRedirect(true);
+  };
+
   return (
     <div>
       {
@@ -105,15 +168,11 @@ function IngredientsProgress({ ingredient, measure, done, setDone, id, type }) {
           ))
       }
       <button
+        className="finish-recipe-btn"
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ counter !== ingredient.length }
-        onClick={ () => setRedirect(true) }
-        // style={ {
-        //   marginLeft: '600px',
-        //   position: 'fixed',
-        //   bottom: '0px',
-        // } }
+        disabled={ disabledBtn }
+        onClick={ () => SaveRecipe() }
       >
         Finalizar Receita
       </button>
@@ -130,6 +189,7 @@ IngredientsProgress.propTypes = {
   setDone: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  dataDetail: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default IngredientsProgress;

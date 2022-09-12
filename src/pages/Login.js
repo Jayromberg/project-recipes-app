@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RecipesContex from '../context/RecipesContext';
 import { localStorageCocktailsToken,
   localStorageMealstoken, localStorageUser } from '../services/localStorage';
+import '../App.css';
 
 function Login() {
   const history = useHistory();
@@ -25,8 +26,8 @@ function Login() {
   };
 
   return (
-    <div>
-      <form>
+    <div className="bodyLogin">
+      <form className="loginForm">
         <label htmlFor="page-login">
           <input
             data-testid="email-input"

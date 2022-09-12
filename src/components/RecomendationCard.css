@@ -5,12 +5,21 @@ img {
 }
 
 .item {
-  border: 1px solid black;
+  border: 2px rgba(248, 186, 141, 0.596) solid;
   flex: none;
   height: 300px;
   margin: 10px;
   margin-bottom: 100px;
   pointer-events: none;
   scroll-snap-align: start;
+  text-align: center;
   width: 50%;
+}
+
+.item img {
+  margin-top: 10px;
+}
+
+.item p {
+  margin-top: 5px;
 }
